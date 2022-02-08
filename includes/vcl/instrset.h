@@ -186,8 +186,8 @@ namespace VCL_NAMESPACE {
 
 // Fix problem with non-overloadable macros named min and max in WinDef.h
 #ifdef _MSC_VER
-#if defined (_WINDEF_) && defined(min) && defined(max)
-#undef min
+#if defined (_WINDEF_) && defined(dgemm_blocked_min) && defined(max)
+#undef dgemm_blocked_min
 #undef max
 #endif
 #ifndef NOMINMAX

@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(includes/dgemm)
 include_directories(includes/vcl)
 
-add_executable(vcl_test main.cpp)
+add_executable(vcl_test main.cpp includes/dgemm/dgemm-blocked.h)
