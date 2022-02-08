@@ -52,7 +52,7 @@ build cmake_object_order_depends_target_vcl_test: phony || CMakeFiles/vcl_test.d
 build CMakeFiles/vcl_test.dir/main.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/main.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\main.cpp.obj.d
   FLAGS = -g -std=gnu++17
-  INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
+  INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
