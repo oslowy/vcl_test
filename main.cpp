@@ -1,6 +1,5 @@
 // Simple vector class example C++ file
 #include <cstdio>
-#include "vectorclass.h"
 #include "dgemm-blocked.h"
 #include <cstdlib> // For: exit, drand48, malloc, free, NULL, EXIT_FAILURE
 #include <cstring> // For: memset
