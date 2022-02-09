@@ -4,7 +4,6 @@
 
 #ifndef VCL_TEST_DGEMM_BLOCKED_H
 #define VCL_TEST_DGEMM_BLOCKED_H
-#endif
 
 #include "vectorclass.h"
 
@@ -14,8 +13,9 @@ const char* dgemm_desc = "Vectorized blocked dgemm.";
 #define BLOCK_SIZE 32
 #endif
 
-#ifndef VEC_SIZE
+#if !defined(VEC_SIZE)
 #define VEC_SIZE 4
+#endif
 
 #define dgemm_blocked_min(a,b) (((a)<(b))?(a):(b))
 
@@ -35,7 +35,7 @@ static void do_block (int lda, int M, int N, int K, double* A, double* B, double
     Vec4q iC(iInit);
 
     /*
-     * Need to work on remainders that do not fill size-4 vectors!
+     * TODO Need to work on remainders that do not fill size-4 vectors!
      * */
 
     /* For each row i of A */
@@ -47,12 +47,16 @@ static void do_block (int lda, int M, int N, int K, double* A, double* B, double
 //            double cij = C[i+j*lda];
             Vec4d vC = lookup<VEC_SIZE>(iC, C);
 
+            // TODO fill partial vectors at end of row/column
+
             for (int k = 0; k < K; k += VEC_SIZE)
 //                cij += A[i+k*lda] * B[k+j*lda];
             {
                 Vec4d vA = lookup<VEC_SIZE>(iA, A);
                 Vec4d vB = lookup<VEC_SIZE>(iB, B);
                 vC += vA * vB;
+
+                // TODO store only the part of the vector that was filled with real data when it is partial
                 vC.store(C + iC.extract(0));
 
                 iA += VEC_SIZE * lda;
