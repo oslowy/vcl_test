@@ -11,7 +11,7 @@ const char* dgemm_desc = "Simple blocked dgemm.";
 #define BLOCK_SIZE 32
 #endif
 
-#define dgemm_blocked_min(a,b) (((a)<(b))?(a):(b))
+#define the_lesser(a,b) (((a)<(b))?(a):(b))
 
 /* This auxiliary subroutine performs a smaller dgemm operation
  *  C := C + A * B
@@ -45,9 +45,9 @@ void square_dgemm (int lda, double* A, double* B, double* C)
             for (int k = 0; k < lda; k += BLOCK_SIZE)
             {
                 /* Correct block dimensions if block "goes off edge of" the matrix */
-                int M = dgemm_blocked_min (BLOCK_SIZE, lda - i);
-                int N = dgemm_blocked_min (BLOCK_SIZE, lda - j);
-                int K = dgemm_blocked_min (BLOCK_SIZE, lda - k);
+                int M = the_lesser (BLOCK_SIZE, lda - i);
+                int N = the_lesser (BLOCK_SIZE, lda - j);
+                int K = the_lesser (BLOCK_SIZE, lda - k);
 
                 /* Perform individual block dgemm */
                 do_block(lda, M, N, K, A + i + k*lda, B + k + j*lda, C + i + j*lda);
