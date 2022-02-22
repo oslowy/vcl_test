@@ -45,3 +45,7 @@ void DgemmBlocked::square_dgemm (int lda, const double* A, const double* B, doub
                 do_block(lda, M, N, K, A + i + k*lda, B + k + j*lda, C + i + j*lda);
             }
 }
+
+const char *DgemmBlocked::dgemm_desc() {
+    return "Blocked DGEMM without vectorism";
+}

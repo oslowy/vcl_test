@@ -22,3 +22,7 @@ void DgemmNaive::square_dgemm(int n, const double *A, const double *B, double *C
             C[i+j*n] = cij;
         }
 }
+
+const char *DgemmNaive::dgemm_desc() {
+    return "Naive DGEMM";
+}

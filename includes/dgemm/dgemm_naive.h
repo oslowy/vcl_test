@@ -11,7 +11,7 @@
 class DgemmNaive : public Dgemm {
 public:
     void square_dgemm (int n, const double* A, const double* B, double* C) override;
-    const char* dgemm_desc {"Naive DGEMM"};
+    const char* dgemm_desc() override;
 };
 
 #endif //VCL_TEST_DGEMM_NAIVE_H

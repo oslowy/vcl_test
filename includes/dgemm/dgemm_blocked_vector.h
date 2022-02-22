@@ -11,7 +11,7 @@ class DgemmBlockedVector : public DgemmBlocked {
 public:
     static const int BLOCK_SIZE = 32;
     static const int VEC_SIZE = 4;
-    const char* dgemm_desc {"Vectorized Blocked DGEMM"};
+    const char* dgemm_desc() override;
 
     void do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C) override;
 };

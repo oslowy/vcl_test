@@ -57,3 +57,7 @@ void DgemmBlockedVector::do_block(int lda, int M, int N, int K, const double *A,
         iC += VEC_SIZE;
     }
 }
+
+const char *DgemmBlockedVector::dgemm_desc() {
+    return "Vectorized Blocked DGEMM";
+}
