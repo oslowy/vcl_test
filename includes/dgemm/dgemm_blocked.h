@@ -9,9 +9,10 @@
 
 class DgemmBlocked : public Dgemm {
 public:
-    static const int BLOCK_SIZE = 32;
+    const int BLOCK_SIZE = 32;
+    const char* dgemm_desc {"Blocked DGEMM without vectorism"};
 
-    virtual void do_block (int lda, int M, int N, int K, double* A, double* B, double* C);
+    virtual void do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C);
     void square_dgemm (int n, const double* A, const double* B, double* C) override;
 };
 

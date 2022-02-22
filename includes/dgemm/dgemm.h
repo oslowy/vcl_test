@@ -9,7 +9,7 @@
 class Dgemm {
 public:
     virtual void square_dgemm (int n, const double* A, const double* B, double* C) = 0;
-    char* dgemm_desc = "";
+    const char* dgemm_desc = "";
 };
 
 

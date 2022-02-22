@@ -56,26 +56,26 @@ build CMakeFiles/vcl_test.dir/main.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Use
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
-build CMakeFiles/vcl_test.dir/includes/dgemm/dgemm_naive.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm/dgemm_naive.cpp || cmake_object_order_depends_target_vcl_test
-  DEP_FILE = CMakeFiles\vcl_test.dir\includes\dgemm\dgemm_naive.cpp.obj.d
+build CMakeFiles/vcl_test.dir/dgemm_naive.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/dgemm_naive.cpp || cmake_object_order_depends_target_vcl_test
+  DEP_FILE = CMakeFiles\vcl_test.dir\dgemm_naive.cpp.obj.d
   FLAGS = -g -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
-  OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir\includes\dgemm
+  OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
-build CMakeFiles/vcl_test.dir/includes/dgemm/dgemm_blocked.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm/dgemm_blocked.cpp || cmake_object_order_depends_target_vcl_test
-  DEP_FILE = CMakeFiles\vcl_test.dir\includes\dgemm\dgemm_blocked.cpp.obj.d
+build CMakeFiles/vcl_test.dir/dgemm_blocked.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/dgemm_blocked.cpp || cmake_object_order_depends_target_vcl_test
+  DEP_FILE = CMakeFiles\vcl_test.dir\dgemm_blocked.cpp.obj.d
   FLAGS = -g -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
-  OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir\includes\dgemm
+  OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
-build CMakeFiles/vcl_test.dir/includes/dgemm/dgemm_blocked_vector.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm/dgemm_blocked_vector.cpp || cmake_object_order_depends_target_vcl_test
-  DEP_FILE = CMakeFiles\vcl_test.dir\includes\dgemm\dgemm_blocked_vector.cpp.obj.d
+build CMakeFiles/vcl_test.dir/dgemm_blocked_vector.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/dgemm_blocked_vector.cpp || cmake_object_order_depends_target_vcl_test
+  DEP_FILE = CMakeFiles\vcl_test.dir\dgemm_blocked_vector.cpp.obj.d
   FLAGS = -g -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
-  OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir\includes\dgemm
+  OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 
 # =============================================================================
@@ -85,7 +85,7 @@ build CMakeFiles/vcl_test.dir/includes/dgemm/dgemm_blocked_vector.cpp.obj: CXX_C
 #############################################
 # Link the executable vcl_test.exe
 
-build vcl_test.exe: CXX_EXECUTABLE_LINKER__vcl_test_Debug CMakeFiles/vcl_test.dir/main.cpp.obj CMakeFiles/vcl_test.dir/includes/dgemm/dgemm_naive.cpp.obj CMakeFiles/vcl_test.dir/includes/dgemm/dgemm_blocked.cpp.obj CMakeFiles/vcl_test.dir/includes/dgemm/dgemm_blocked_vector.cpp.obj
+build vcl_test.exe: CXX_EXECUTABLE_LINKER__vcl_test_Debug CMakeFiles/vcl_test.dir/main.cpp.obj CMakeFiles/vcl_test.dir/dgemm_naive.cpp.obj CMakeFiles/vcl_test.dir/dgemm_blocked.cpp.obj CMakeFiles/vcl_test.dir/dgemm_blocked_vector.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\vcl_test.dir

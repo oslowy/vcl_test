@@ -9,7 +9,7 @@
 /* This auxiliary subroutine performs a smaller dgemm operation
  *  C := C + A * B
  * where C is M-by-N, A is M-by-K, and B is K-by-N. */
-void DgemmBlockedVector::do_block(int lda, int M, int N, int K, double *A, double *B, double *C)
+void DgemmBlockedVector::do_block(int lda, int M, int N, int K, const double *A, const double *B, double *C)
 {
     /* Initialize lookup index vectors */
     Vec4q iInit;
