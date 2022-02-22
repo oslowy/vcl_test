@@ -27,7 +27,7 @@ void DgemmBlocked::do_block (int lda, int M, int N, int K, double* A, double* B,
  *  C := C + A * B
  * where A, B, and C are lda-by-lda matrices stored in column-major format.
  * On exit, A and B maintain their input values. */
-void DgemmBlocked::square_dgemm (int lda, double* A, double* B, double* C)
+void DgemmBlocked::square_dgemm (int lda, const double* A, const double* B, const double* C)
 {
     /* For each block-row of A */
     for (int i = 0; i < lda; i += BLOCK_SIZE)

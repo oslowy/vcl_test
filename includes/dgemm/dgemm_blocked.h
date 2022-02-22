@@ -12,7 +12,7 @@ public:
     static const int BLOCK_SIZE = 32;
 
     virtual void do_block (int lda, int M, int N, int K, double* A, double* B, double* C);
-    void square_dgemm (int lda, double* A, double* B, double* C);
+    void square_dgemm (int n, const double* A, const double* B, double* C) override;
 };
 
 #endif //VCL_TEST_DGEMM_BLOCKED_H

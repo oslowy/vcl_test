@@ -5,8 +5,6 @@
 #ifndef VCL_TEST_DGEMM_BLOCKED_H
 #define VCL_TEST_DGEMM_BLOCKED_H
 
-#include "vectorclass.h"
-#include "dgemm_utils.h"
 #include "dgemm_blocked.h"
 
 class DgemmBlockedVector : public DgemmBlocked {

@@ -3,6 +3,8 @@
 //
 
 #include "dgemm_blocked_vector.h"
+#include "vectorclass.h"
+#include "dgemm_utils.h"
 
 /* This auxiliary subroutine performs a smaller dgemm operation
  *  C := C + A * B
