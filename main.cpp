@@ -1,6 +1,8 @@
 // Simple vector class example C++ file
 #include <cstdio>
-#include "dgemm-blocked.h"
+#include "dgemm_naive.h"
+#include "dgemm_blocked.h"
+#include "dgemm_blocked_vector.h"
 #include <cstdlib> // For: exit, drand48, malloc, free, NULL, EXIT_FAILURE
 #include <cstring> // For: memset
 
@@ -72,7 +74,8 @@ void absolute_value (double *p, int n)
 /* The benchmarking program */
 int main (int argc, char **argv)
 {
-    printf ("Description:\t%s\n\n", dgemm_desc);
+    /* Different types of Dgemm objects */
+
 
     /* Test sizes should highlight performance dips at multiples of certain powers-of-two */
 

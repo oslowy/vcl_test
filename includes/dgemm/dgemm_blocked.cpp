@@ -1,22 +1,14 @@
 //
-// Created by Orion on 2/8/2022.
+// Created by Orion on 2/22/2022.
 //
 
-#ifndef VCL_TEST_DGEMM_BLOCKED_H
-#define VCL_TEST_DGEMM_BLOCKED_H
-
-const char* dgemm_desc = "Simple blocked dgemm.";
-
-#if !defined(BLOCK_SIZE)
-#define BLOCK_SIZE 32
-#endif
-
-#define the_lesser(a,b) (((a)<(b))?(a):(b))
+#include "dgemm_blocked.h"
+#include "dgemm_utils.h"
 
 /* This auxiliary subroutine performs a smaller dgemm operation
  *  C := C + A * B
  * where C is M-by-N, A is M-by-K, and B is K-by-N. */
-static void do_block (int lda, int M, int N, int K, double* A, double* B, double* C)
+void DgemmBlocked::do_block (int lda, int M, int N, int K, double* A, double* B, double* C)
 {
     /* For each row i of A */
     for (int i = 0; i < M; ++i)
@@ -35,7 +27,7 @@ static void do_block (int lda, int M, int N, int K, double* A, double* B, double
  *  C := C + A * B
  * where A, B, and C are lda-by-lda matrices stored in column-major format.
  * On exit, A and B maintain their input values. */
-void square_dgemm (int lda, double* A, double* B, double* C)
+void DgemmBlocked::square_dgemm (int lda, double* A, double* B, double* C)
 {
     /* For each block-row of A */
     for (int i = 0; i < lda; i += BLOCK_SIZE)
@@ -45,13 +37,11 @@ void square_dgemm (int lda, double* A, double* B, double* C)
             for (int k = 0; k < lda; k += BLOCK_SIZE)
             {
                 /* Correct block dimensions if block "goes off edge of" the matrix */
-                int M = the_lesser (BLOCK_SIZE, lda - i);
-                int N = the_lesser (BLOCK_SIZE, lda - j);
-                int K = the_lesser (BLOCK_SIZE, lda - k);
+                int M = min2 (BLOCK_SIZE, lda - i);
+                int N = min2 (BLOCK_SIZE, lda - j);
+                int K = min2 (BLOCK_SIZE, lda - k);
 
                 /* Perform individual block dgemm */
                 do_block(lda, M, N, K, A + i + k*lda, B + k + j*lda, C + i + j*lda);
             }
 }
-
-#endif //VCL_TEST_DGEMM_BLOCKED_H
