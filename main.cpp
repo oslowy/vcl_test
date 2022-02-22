@@ -1,13 +1,14 @@
 // Simple vector class example C++ file
 #include <cstdio>
-#include "dgemm_naive.h"
-#include "dgemm_blocked.h"
-#include "dgemm_blocked_vector.h"
 #include <cstdlib> // For: exit, drand48, malloc, free, NULL, EXIT_FAILURE
 #include <cstring> // For: memset
 
 #include <cfloat>  // For: DBL_EPSILON
 #include <cmath>   // For: fabs
+
+#include "dgemm_naive.h"
+#include "dgemm_blocked.h"
+#include "dgemm_blocked_vector.h"
 
 #ifdef GETTIMEOFDAY
 #include <sys/time.h> // For struct timeval, gettimeofday
@@ -71,23 +72,21 @@ void absolute_value (double *p, int n)
         p[i] = fabs (p[i]);
 }
 
+int test_sizes[] =
+    /* Multiples-of-32, +/- 1. Currently commented. */
+    /* {31,32,33,63,64,65,95,96,97,127,128,129,159,160,161,191,192,193,223,224,225,255,256,257,287,288,289,319,320,321,351,352,353,383,384,385,415,416,417,447,448,449,479,480,481,511,512,513,543,544,545,575,576,577,607,608,609,639,640,641,671,672,673,703,704,705,735,736,737,767,768,769,799,800,801,831,832,833,863,864,865,895,896,897,927,928,929,959,960,961,991,992,993,1023,1024,1025}; */
+
+    /* A representative subset of the first list. Currently uncommented. */
+    { 31, 32, 96, 97, 127, 128, 129, 191, 192, 229, 255, 256, 257,
+      319, 320, 321, 417, 479, 480, 511, 512, 639, 640, 767, 768, 769 };
+
 /* The benchmarking program */
 int main (int argc, char **argv)
 {
     /* Different types of Dgemm objects */
-
+    Dgemm* dgemms[] = {new DgemmNaive(), new DgemmBlocked(), new DgemmBlockedVector()};
 
     /* Test sizes should highlight performance dips at multiples of certain powers-of-two */
-
-    int test_sizes[] =
-
-            /* Multiples-of-32, +/- 1. Currently commented. */
-            /* {31,32,33,63,64,65,95,96,97,127,128,129,159,160,161,191,192,193,223,224,225,255,256,257,287,288,289,319,320,321,351,352,353,383,384,385,415,416,417,447,448,449,479,480,481,511,512,513,543,544,545,575,576,577,607,608,609,639,640,641,671,672,673,703,704,705,735,736,737,767,768,769,799,800,801,831,832,833,863,864,865,895,896,897,927,928,929,959,960,961,991,992,993,1023,1024,1025}; */
-
-            /* A representative subset of the first list. Currently uncommented. */
-            { 31, 32, 96, 97, 127, 128, 129, 191, 192, 229, 255, 256, 257,
-              319, 320, 321, 417, 479, 480, 511, 512, 639, 640, 767, 768, 769 };
-
     int nsizes = sizeof(test_sizes)/sizeof(test_sizes[0]);
 
     /* assume last size is also the largest size */
@@ -100,51 +99,56 @@ int main (int argc, char **argv)
 
     double Mflops_s[nsizes],per[nsizes],aveper;
 
-    /* For each test size */
-    for (int isize = 0; isize < sizeof(test_sizes)/sizeof(test_sizes[0]); ++isize)
+    /* For each dgemm type */
+    for(int i_dgemm_type = 0; i_dgemm_type < sizeof (dgemms)/sizeof (dgemms[0]); ++i_dgemm_type)
     {
-        /* Create and fill 3 random matrices A,B,C*/
-        int n = test_sizes[isize];
+        Dgemm *dgemm = dgemms[i_dgemm_type];
 
-        double* A = buf + 0;
-        double* B = A + nmax*nmax;
-        double* C = B + nmax*nmax;
-
-        fill (A, n*n);
-        fill (B, n*n);
-        fill (C, n*n);
-
-        /* Measure performance (in Gflops/s). */
-
-        /* Time a "sufficiently long" sequence of calls to reduce noise */
-        double Gflops_s, seconds = -1.0;
-        double timeout = 0.1; // "sufficiently long" := at least 1/10 second.
-        for (int n_iterations = 1; seconds < timeout; n_iterations *= 2)
+        /* For each test size */
+        for (int isize = 0; isize < sizeof(test_sizes)/sizeof(test_sizes[0]); ++isize)
         {
-            /* Warm-up */
-            square_dgemm (n, A, B, C);
+            /* Create and fill 3 random matrices A,B,C*/
+            int n = test_sizes[isize];
 
-            /* Benchmark n_iterations runs of square_dgemm */
-            seconds = -wall_time();
-            for (int it = 0; it < n_iterations; ++it)
-                square_dgemm (n, A, B, C);
-            seconds += wall_time();
+            double* A = buf + 0;
+            double* B = A + nmax*nmax;
+            double* C = B + nmax*nmax;
 
-            /*  compute Gflop/s rate */
-            Gflops_s = 2.e-9 * n_iterations * n * n * n / seconds;
-        }
+            fill (A, n*n);
+            fill (B, n*n);
+            fill (C, n*n);
 
-        /* Storing Mflop rate and calculating percentage of peak */
-        Mflops_s[isize] = Gflops_s*1000;
-        per[isize] = Gflops_s*100/MAX_SPEED;
+            /* Measure performance (in Gflops/s). */
 
-        printf ("Size: %d\tMflop/s: %8g\tPercentage:%6.2lf\n", n, Mflops_s[isize],per[isize]);
+            /* Time a "sufficiently long" sequence of calls to reduce noise */
+            double Gflops_s, seconds = -1.0;
+            double timeout = 0.1; // "sufficiently long" := at least 1/10 second.
+            for (int n_iterations = 1; seconds < timeout; n_iterations *= 2)
+            {
+                /* Warm-up */
+                dgemm->square_dgemm (n, A, B, C);
 
-        /* Ensure that error does not exceed the theoretical error bound. */
+                /* Benchmark n_iterations runs of square_dgemm */
+                seconds = -wall_time();
+                for (int it = 0; it < n_iterations; ++it)
+                    dgemm->square_dgemm (n, A, B, C);
+                seconds += wall_time();
 
-        /* C := A * B, computed with square_dgemm */
-        memset (C, 0, n * n * sizeof(double));
-        square_dgemm (n, A, B, C);
+                /*  compute Gflop/s rate */
+                Gflops_s = 2.e-9 * n_iterations * n * n * n / seconds;
+            }
+
+            /* Storing Mflop rate and calculating percentage of peak */
+            Mflops_s[isize] = Gflops_s*1000;
+            per[isize] = Gflops_s*100/MAX_SPEED;
+
+            printf ("Size: %d\tMflop/s: %8g\tPercentage:%6.2lf\n", n, Mflops_s[isize],per[isize]);
+
+//        /* Ensure that error does not exceed the theoretical error bound. */
+//
+//        /* C := A * B, computed with square_dgemm */
+//        memset (C, 0, n * n * sizeof(double));
+//        square_dgemm (n, A, B, C);
 
 //        /* Do not explicitly check that A and B were unmodified on square_dgemm exit
 //         *  - if they were, the following will most likely detect it:
@@ -163,20 +167,21 @@ int main (int argc, char **argv)
 //        for (int i = 0; i < n * n; ++i)
 //            if (C[i] > 0)
 //                die("*** FAILURE *** Error in matrix multiply exceeds componentwise error bounds.\n" );
-// Disabled for local test
+//        Disabled for local test
+        }
+
+        /* Calculating average percentage of peak reached by algorithm */
+        aveper=0;
+        for (int i=0; i<nsizes;i++)
+            aveper+= per[i];
+        aveper/=nsizes*1.0;
+
+        /* Printing average percentage to screen */
+        printf("Average percentage of Peak = %g\n",aveper);
+
+
+        free (buf);
     }
-
-    /* Calculating average percentage of peak reached by algorithm */
-    aveper=0;
-    for (int i=0; i<nsizes;i++)
-        aveper+= per[i];
-    aveper/=nsizes*1.0;
-
-    /* Printing average percentage to screen */
-    printf("Average percentage of Peak = %g\n",aveper);
-
-
-    free (buf);
 
     return 0;
 }
