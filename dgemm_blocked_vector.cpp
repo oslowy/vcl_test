@@ -3,61 +3,58 @@
 //
 
 #include "dgemm_blocked_vector.h"
-#include "vectorclass.h"
 #include "dgemm_utils.h"
-
-/* This auxiliary subroutine performs a smaller dgemm operation
- *  C := C + A * B
- * where C is M-by-N, A is M-by-K, and B is K-by-N. */
-void DgemmBlockedVector::do_block(int lda, int M, int N, int K, const double *A, const double *B, double *C)
-{
-    /* Initialize lookup index vectors */
-    Vec4q iInit;
-    for(int i = 0; i < VEC_SIZE; i++) {
-        iInit.insert(i, i * lda);
-    }
-
-    Vec4q iA(iInit);
-    Vec4q iB(iInit);
-    Vec4q iC(iInit);
-
-    /*
-     * TODO Need to work on remainders that do not fill size-4 vectors!
-     * */
-
-    /* For each row i of A */
-    for (int i = 0; i < M; ++i) {
-        /* For each column j of B */
-        for (int j = 0; j < N; j += VEC_SIZE)
-        {
-            /* Compute C(i,j) */
-//            double cij = C[i+j*lda];
-            Vec4d vC = lookup<VEC_SIZE>(iC, C);
-
-            // TODO fill partial vectors at end of row/column
-
-            for (int k = 0; k < K; k += VEC_SIZE)
-//                cij += A[i+k*lda] * B[k+j*lda];
-            {
-                Vec4d vA = lookup<VEC_SIZE>(iA, A);
-                Vec4d vB = lookup<VEC_SIZE>(iB, B);
-                vC += vA * vB;
-
-                // TODO store only the part of the vector that was filled with real data when it is partial
-                vC.store(C + iC.extract(0));
-
-                iA += VEC_SIZE * lda;
-                iB += VEC_SIZE;
-            }
-            iB += VEC_SIZE * lda - K;
-            iC += VEC_SIZE * lda;
-        }
-        iA += VEC_SIZE - lda * K;
-        iB = iInit;
-        iC += VEC_SIZE;
-    }
-}
 
 const char *DgemmBlockedVector::dgemm_desc() {
     return "Vectorized Blocked DGEMM";
+}
+
+void DgemmBlockedVector::square_dgemm(int n, const double *A, const double *B, double *C) {
+    /* Load data into vectors */
+    int vec_mat_stop = n / VEC_SIZE; //Length of one row of vector matrix if source matrix dimension is a multiple of vector size
+    int vec_mat_dim = (n % VEC_SIZE == 0)? vec_mat_stop: vec_mat_stop + 1;
+    int vec_mat_flat = n * vec_mat_dim;
+
+    Vec4d vA[vec_mat_flat], vB[vec_mat_flat], vC[vec_mat_flat];
+    load_vectors(n, A, B, C,
+                 vec_mat_flat, vA, vB, vC);
+
+    /* Perform blocked dgemm using vectors */
+
+    /* Extract data from vectors to final matrix */
+
+    //Stop reading before padding in padded vectors
+}
+
+void DgemmBlockedVector::load_vectors(int n, const double *A, const double *B, const double *C,
+                                      int vec_mat_flat, Vec4d *vA, Vec4d *vB, Vec4d *vC) {
+    int vec_mat_stop = n / VEC_SIZE;
+    int vec_flat_index = 0;
+    int scalar_flat_offset = 0;
+    int remainder = n % VEC_SIZE;
+
+    for (int i=0; i<n; i++)
+    {
+        /* Fill main portion of row */
+        for (int j=0; j<vec_mat_stop; j++)
+        {
+            vA[vec_flat_index].load(A + scalar_flat_offset);
+            vB[vec_flat_index].load(B + scalar_flat_offset);
+            vC[vec_flat_index] = 0.0; //Initialize accumulator
+
+            /* Update index */
+            vec_flat_index++;
+            scalar_flat_offset += VEC_SIZE;
+        }
+
+        /* Fill end of row that partially oversteps original row end */
+        vA[vec_flat_index].load_partial(remainder, A + scalar_flat_offset);
+        vB[vec_flat_index].load_partial(remainder, B + scalar_flat_offset);
+        vC[vec_flat_index] = 0.0;
+
+        /* Update index */
+        vec_flat_index++;
+        scalar_flat_offset += remainder;
+    }
+
 }

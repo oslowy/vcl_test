@@ -6,6 +6,7 @@
 #define VCL_TEST_DGEMM_BLOCKED_VECTOR_H
 
 #include "dgemm_blocked.h"
+#include "vectorclass.h"
 
 class DgemmBlockedVector : public DgemmBlocked {
 public:
@@ -13,7 +14,11 @@ public:
     static const int VEC_SIZE = 4;
     const char* dgemm_desc() override;
 
-    void do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C) override;
+    void square_dgemm (int n, const double* A, const double* B, double* C) override;
+
+private:
+    static void load_vectors (int n, const double* A, const double* B, const double* C,
+                              int vec_mat_flat, Vec4d* vA, Vec4d* vB, Vec4d* vC);
 };
 
 #endif //VCL_TEST_DGEMM_BLOCKED_VECTOR_H
