@@ -2,10 +2,10 @@
 // Created by Serendipity_2 on 2/24/2022.
 //
 
-#include "DgemmVectorBlocked.h"
+#include "DgemmBlocked.h"
 #include "dgemm_utils.h"
 
-void DgemmVectorBlocked::vector_dgemm(int lda, const Vec4d *vA, const Vec4d *vB, Vec4d *vC) {
+void DgemmBlocked::square_dgemm(int lda, const double *A, const double *B, double *C) {
     /* For each block-row of A */
     for (int i = 0; i < lda; i += BLOCK_SIZE)
         /* For each block-column of B */
@@ -19,6 +19,6 @@ void DgemmVectorBlocked::vector_dgemm(int lda, const Vec4d *vA, const Vec4d *vB,
                 int K = min2 (BLOCK_SIZE, lda - k);
 
                 /* Perform individual block dgemm */
-                do_block(lda, M, N, K, vA + i + k*lda, vB + k + j*lda, vC + i + j*lda);
+                do_block(lda, M, N, K, A + i + k*lda, B + k + j*lda, C + i + j*lda);
             }
 }
