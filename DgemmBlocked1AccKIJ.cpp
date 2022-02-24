@@ -1,25 +1,23 @@
 //
-// Created by Orion on 2/22/2022.
+// Created by Serendipity_2 on 2/24/2022.
 //
 
-#include "dgemm_blocked.h"
-#include "dgemm_utils.h"
+#include "DgemmBlocked1AccKIJ.h"
 
 /* This auxiliary subroutine performs a smaller dgemm operation
  *  C := C + A * B
  * where C is M-by-N, A is M-by-K, and B is K-by-N. */
-void DgemmBlocked::do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C)
+void DgemmBlocked1AccKIJ::do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C)
 {
-    /* For each row i of A */
-    for (int i = 0; i < M; ++i)
-        /* For each column j of B */
-        for (int j = 0; j < N; ++j)
+    for (int k = 0; k < K; ++k)
+        for (int i = 0; i < M; ++i)
         {
+            /* Pre-store A[i][k] to avoid repeated memory access */
+            double aik = A[i+k*lda];
+
             /* Compute C(i,j) */
-            double cij = C[i+j*lda];
-            for (int k = 0; k < K; ++k)
-                cij += A[i+k*lda] * B[k+j*lda];
-            C[i+j*lda] = cij;
+            for( int j = 0; j < N; j++ )
+                C[i+j*lda] += aik * B[k+j*lda];
         }
 }
 
@@ -27,7 +25,7 @@ void DgemmBlocked::do_block (int lda, int M, int N, int K, const double* A, cons
  *  C := C + A * B
  * where A, B, and C are lda-by-lda matrices stored in column-major format.
  * On exit, A and B maintain their input values. */
-void DgemmBlocked::square_dgemm (int lda, const double* A, const double* B, double* C)
+void DgemmBlocked1AccKIJ::square_dgemm (int lda, const double* A, const double* B, double* C)
 {
     /* For each block-row of A */
     for (int i = 0; i < lda; i += BLOCK_SIZE)
@@ -46,6 +44,6 @@ void DgemmBlocked::square_dgemm (int lda, const double* A, const double* B, doub
             }
 }
 
-const char *DgemmBlocked::dgemm_desc() {
-    return "Blocked DGEMM without vectorism";
+const char *DgemmBlocked1AccKIJ::dgemm_desc() {
+    return "Blocked DGEMM with 1 accumulator and k-i-j loop order inside block";
 }

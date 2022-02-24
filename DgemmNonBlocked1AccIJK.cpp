@@ -1,14 +1,14 @@
 //
-// Created by Orion on 2/22/2022.
+// Created by Serendipity_2 on 2/24/2022.
 //
 
-#include "dgemm_naive.h"
+#include "DgemmNonBlocked1AccIJK.h"
 
 /* This routine performs a dgemm operation
  *  C := C + A * B
  * where A, B, and C are lda-by-lda matrices stored in column-major format.
  * On exit, A and B maintain their input values. */
-void DgemmNaive::square_dgemm(int n, const double *A, const double *B, double *C)
+void DgemmNonBlocked1AccIJK::square_dgemm(int n, const double *A, const double *B, double *C)
 {
     /* For each row i of A */
     for (int i = 0; i < n; ++i)
@@ -23,6 +23,6 @@ void DgemmNaive::square_dgemm(int n, const double *A, const double *B, double *C
         }
 }
 
-const char *DgemmNaive::dgemm_desc() {
-    return "Naive DGEMM";
+const char *DgemmNonBlocked1AccIJK::dgemm_desc() {
+    return "Non-blocked DGEMM with i-j-k loop order and one accumulator";
 }
