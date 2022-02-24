@@ -128,7 +128,7 @@ int main (int argc, char **argv)
 {
     /* Different types of Dgemm objects */
     Dgemm* dgemms[] = {new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccKIJ(),
-                       new DgemmBlocked1AccIJK(), new DgemmBlocked1AccKIJ()/* , new DgemmBlockedVector() */};
+                       new DgemmBlocked1AccIJK(), new DgemmBlocked1AccKIJ()/* , new DgemmVector() */};
 
     /* Test sizes should highlight performance dips at multiples of certain powers-of-two */
     int nsizes = sizeof(test_sizes)/sizeof(test_sizes[0]);
