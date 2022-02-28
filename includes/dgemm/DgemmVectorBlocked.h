@@ -13,7 +13,7 @@ public:
     static const int BLOCK_SIZE = 8;
 
 protected:
-    void vector_dgemm(int n, const Vec4d* vA, const Vec4d* vB, Vec4d* vC) override;
+    void vector_dgemm(int n, int adjustN, int vN, const Vec4d *vA, const Vec4d *vB, Vec4d *vC) override;
     virtual void do_block(int lda, int M, int N, int K, const Vec4d* A, const Vec4d* B, Vec4d* C) = 0;
 };
 

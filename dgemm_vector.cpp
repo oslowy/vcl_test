@@ -7,15 +7,15 @@
 
 void DgemmVector::square_dgemm(int n, const double *A, const double *B, double *C) {
     /* Load data into vectors */
-    int vN; //Will hold number of elements in a row of the vector version of the output matrix
+    int adjustN, vN; //Will hold number of elements in a row of the vector version of the output matrix
     Vec4d *vA, *vB, *vC;
-    load_vectors(n, vN, A, B, vA, vB, vC);
+    load_vectors(n, adjustN, vN, A, B, vA, vB, vC);
 
     /* Perform blocked dgemm using vectors */
-    vector_dgemm(n, vA, vB, vC);
+    vector_dgemm(n, adjustN, vN, vA, vB, vC);
 
     /* Extract data from vectors to final matrix */
-    store_vectors(n, vN, C, vC);
+    store_vectors(n, adjustN, vN, C, vC);
 
     /* Delete the vector arrays after no longer used */
     delete[] vA;
@@ -23,9 +23,9 @@ void DgemmVector::square_dgemm(int n, const double *A, const double *B, double *
     delete[] vC;
 }
 
-void DgemmVector::load_vectors(int n, int &vN, const double *A, const double *B, Vec4d *&vA, Vec4d *&vB, Vec4d *&vC) {
+void DgemmVector::load_vectors(int n, int &adjustN, int &vN, const double *A, const double *B, Vec4d *&vA, Vec4d *&vB,
+                               Vec4d *&vC) {
     /* Pad the scalar array with zeros if its size is not a multiple of the vector size */
-    int adjustN;
     double *padA, *padB;
 
     /* Pad the matrices with zeros to evenly fill vectors */
@@ -41,8 +41,7 @@ void DgemmVector::load_vectors(int n, int &vN, const double *A, const double *B,
     load_vC(n, adjustN, vN, vC);
 }
 
-void DgemmVector::store_vectors(int n, int vN, double *C, const Vec4d *vC) {
-    int adjustN = vN * VEC_SIZE;
+void DgemmVector::store_vectors(int n, int adjustN, int vN, double *C, const Vec4d *vC) {
     double padC[n * adjustN];
 
     /* Store padded result */

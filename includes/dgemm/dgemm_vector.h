@@ -20,9 +20,10 @@ protected:
     static void load_vB(int adjustN, int &vN, double *padB, Vec4d *&vB);
     static void load_vC(int n, int adjustN, int vN, Vec4d *&vC);
 
-    static void load_vectors(int n, int &vN, const double *A, const double *B, Vec4d *&vA, Vec4d *&vB, Vec4d *&vC);
-    virtual void vector_dgemm(int n, const Vec4d* vA, const Vec4d* vB, Vec4d* vC) = 0;
-    static void store_vectors(int n, int vN, double *C, const Vec4d *vC);
+    static void load_vectors(int n, int &adjustN, int &vN, const double *A, const double *B, Vec4d *&vA, Vec4d *&vB,
+                             Vec4d *&vC);
+    virtual void vector_dgemm(int n, int adjustN, int vN, const Vec4d *vA, const Vec4d *vB, Vec4d *vC) = 0;
+    static void store_vectors(int n, int adjustN, int vN, double *C, const Vec4d *vC);
 };
 
 #endif //VCL_TEST_DGEMM_VECTOR_H

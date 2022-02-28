@@ -5,7 +5,7 @@
 #include "DgemmVectorBlocked.h"
 #include "dgemm_utils.h"
 
-void DgemmVectorBlocked::vector_dgemm(int lda, const Vec4d *vA, const Vec4d *vB, Vec4d *vC) {
+void DgemmVectorBlocked::vector_dgemm(int lda, int adjustN, int vN, const Vec4d *vA, const Vec4d *vB, Vec4d *vC) {
     /* For each block-row of A */
     for (int i = 0; i < lda; i += BLOCK_SIZE)
         /* For each block-column of B */
