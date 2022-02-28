@@ -9,6 +9,10 @@ void DgemmVector::square_dgemm(int n, const double *A, const double *B, double *
     /* Load data into vectors */
     int adjustN, vN; //Will hold number of elements in a row of the vector version of the output matrix
     Vec4d *vA, *vB, *vC;
+    /* vA: n rows x adjustN columns
+     * vB: adjustN rows x vN columns
+     * vC: n rows x vN columns */
+
     load_vectors(n, adjustN, vN, A, B, vA, vB, vC);
 
     /* Perform blocked dgemm using vectors */
@@ -27,6 +31,9 @@ void DgemmVector::load_vectors(int n, int &adjustN, int &vN, const double *A, co
                                Vec4d *&vC) {
     /* Pad the scalar array with zeros if its size is not a multiple of the vector size */
     double *padA, *padB;
+    /* padA: n rows x adjustN columns
+     * padB: adjustN rows x adjustN columns
+     * padC: n rows x adjustN columns */
 
     /* Pad the matrices with zeros to evenly fill vectors */
     pad_scalar_mats(n, adjustN, A, B, padA, padB);
@@ -47,12 +54,12 @@ void DgemmVector::store_vectors(int n, int adjustN, int vN, double *C, const Vec
     /* Store padded result */
     for(int i=0; i<n; i++)
         for(int j=0; j<vN; j++)
-            vC[j + i * vN].store(padC + j * VEC_SIZE + i * n);
+            vC[i + j * n].store(padC + i * VEC_SIZE + j * n);
 
     /* Unpad result while copying to final result */
-    for(int i=0; i<n; i++)
+    for(int i=0; i<adjustN; i++)
         for(int j=0; j<n; j++)
-            C[j + i * n] = padC[j + i * adjustN];
+            C[i + j * n] = padC[i + j * n];
 }
 
 void DgemmVector::pad_scalar_mats(int n, int &adjustN, const double *A, const double *B, double *&padA, double *&padB) {
@@ -60,23 +67,23 @@ void DgemmVector::pad_scalar_mats(int n, int &adjustN, const double *A, const do
     padA = new double[n * adjustN];
     padB = new double[adjustN * adjustN];
 
-    /* Copy data and add padding columns on existing rows */
+    /* Copy data and add padding rows on existing columns */
     for(int i=0; i<n; i++)
     {
         for(int j=0; j<n; j++)
         {
-            padA[j + i * adjustN] = A[j + i * n];
-            padB[j + i * adjustN] = B[j + i * n];
+            padA[i + j * n] = A[i + j * n];
+            padB[i + j * n] = B[i + j * n];
         }
 
         for(int j=n; j < adjustN; j++)
-            padA[j + i * adjustN] = padB[j + i * adjustN] = 0.0;
+            padA[i + j * n] = padB[i + j * n] = 0.0;
     }
 
-    /* Add padding rows */
+    /* Add padding columns to B */
     for(int i=n; i < adjustN; i++)
         for(int j=0; j < adjustN; j++)
-            padB[j + i * adjustN] = 0.0;
+            padB[i + j * adjustN] = 0.0;
 }
 
 void DgemmVector::load_vA(int n, int adjustN, double *padA, Vec4d *&vA) {
@@ -85,10 +92,10 @@ void DgemmVector::load_vA(int n, int adjustN, double *padA, Vec4d *&vA) {
         for(int j=0; j < adjustN; j += VEC_SIZE)
         {
             Vec4d nextV;
-            nextV.load(padA + j + i * adjustN);
+            nextV.load(padA + i + j * n);
             for(int k=0; k<VEC_SIZE; k++)
             {
-                vA[k + j + i * adjustN] = nextV;
+                vA[i + j * n + k] = nextV;
                 nextV = permute4<1,2,3,0>(nextV); //Cycle around one position
             }
         }
@@ -97,16 +104,21 @@ void DgemmVector::load_vA(int n, int adjustN, double *padA, Vec4d *&vA) {
 void DgemmVector::load_vB(int adjustN, int &vN, double *padB, Vec4d *&vB) {
     vN = adjustN / VEC_SIZE; //Initialize vN here
     vB = new Vec4d[adjustN * vN];
-    for(int i=0; i < adjustN; i += VEC_SIZE)
-        for(int j=0; j < vN; j++)
-        {
-            vB[j + (i) * vN] =     gather4d<0x0, 0x5, 0xa, 0xf>(padB + j * 4 + (i) * adjustN);
-            vB[j + (i + 1) * vN] = gather4d<0x4, 0x9, 0xe, 0x3>(padB + j * 4 + (i + 1) * adjustN);
-            vB[j + (i + 2) * vN] = gather4d<0x8, 0xd, 0x2, 0x7>(padB + j * 4 + (i + 2) * adjustN);
-            vB[j + (i + 3) * vN] = gather4d<0xc, 0x1, 0x6, 0xb>(padB + j * 4 + (i + 3) * adjustN);
 
-            //TODO need to modify if VEC_SIZE is different
+    Vec4q lookup_block_row = {0, 1, 2, 3};
+    Vec4q lookup_block_col = {0, 1, 2, 3};
+    for(int i=0; i < adjustN; i++) //Row (incremented by block)
+    {
+        for(int j=0; j < vN; j+=VEC_SIZE) //Vector
+        {
+            for(int k=0; k < VEC_SIZE; k++) //Is the below code correct??
+                vB[i + k + j * adjustN] = lookup<VEC_SIZE>((i + lookup_block_row) + (j + lookup_block_col) * adjustN, padB);
+            lookup_block_col = permute4<1, 2, 3, 0>(lookup_block_col);
         }
+
+    }
+
+
 }
 
 void DgemmVector::load_vC(int n, int adjustN, int vN, Vec4d *&vC) {
