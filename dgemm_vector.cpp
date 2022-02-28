@@ -7,77 +7,66 @@
 
 void DgemmVector::square_dgemm(int n, const double *A, const double *B, double *C) {
     /* Load data into vectors */
-    int vec_mat_stop = n / VEC_SIZE; //Length of one row of vector matrix if source matrix dimension is a multiple of vector size
-    int vec_mat_dim = (n % VEC_SIZE == 0)? vec_mat_stop: vec_mat_stop + 1;
-    int vec_mat_flat = n * vec_mat_dim;
-
-    Vec4d vA[vec_mat_flat], vB[vec_mat_flat], vC[vec_mat_flat];
-    load_vectors(n, A, B, vec_mat_stop, vA, vB, vC);
+    int vN; //Will hold number of elements in the vector version of the matrix
+    Vec4d *vA, *vB, *vC;
+    load_vectors(n, vN, A, B, vA, vB, vC);
 
     /* Perform blocked dgemm using vectors */
     vector_dgemm(n, vA, vB, vC);
 
     /* Extract data from vectors to final matrix */
-    store_vectors(n, C, vec_mat_stop, vC);
+    store_vectors(n, C, vC);
+
+    /* Delete the vector arrays after no longer used */
+    delete[] vA;
+    delete[] vB;
+    delete[] vC;
 }
 
-void DgemmVector::load_vectors(int n, const double *A, const double *B, int vec_mat_stop, Vec4d *vA, Vec4d *vB, Vec4d *vC) {
-    /* Initialize counters for load loop */
-    int vec_flat_index = 0;
-    int scalar_flat_offset = 0;
+void DgemmVector::load_vectors(int n, int &vN, const double *A, const double *B, Vec4d *&vA, Vec4d *&vB, Vec4d *&vC) {
+    /* Pad the scalar array with zeros if its size is not a multiple of the vector size */
     int remainder = n % VEC_SIZE;
+    vN = n + remainder;
+    double padA[n * vN], padB[vN * vN];
 
-    /* Load vectors from scalar arrays */
-    for (int i=0; i<n; i++)
+    /* Copy data and add padding columns on existing rows */
+    for(int i=0; i<n; i++)
     {
-        /* Fill main portion of row */
-        for (int j=0; j<vec_mat_stop; j++)
+        for(int j=0; j<n; j++)
         {
-            vA[vec_flat_index].load(A + scalar_flat_offset);
-            vB[vec_flat_index].load(B + scalar_flat_offset);
-            vC[vec_flat_index] = 0.0; //Initialize accumulator
-
-            /* Update index */
-            vec_flat_index++;
-            scalar_flat_offset += VEC_SIZE;
+            padA[j + i * vN] = A[j + i * n];
+            padB[j + i * vN] = B[j + i * n];
         }
 
-        /* Fill end of row that partially oversteps original row end */
-        vA[vec_flat_index].load_partial(remainder, A + scalar_flat_offset);
-        vB[vec_flat_index].load_partial(remainder, B + scalar_flat_offset);
-        vC[vec_flat_index] = 0.0;
-
-        /* Update index */
-        vec_flat_index++;
-        scalar_flat_offset += remainder;
+        for(int j=n; j < vN; j++)
+            padA[j + i * vN] = padB[j + i * vN] = 0.0;
     }
+
+    /* Add padding rows */
+    for(int i=n; i < vN; i++)
+        for(int j=0; j < vN; j++)
+            padA[j + i * vN] = padB[j + i * vN] = 0.0;
+
+    /* Load the vector version of A by expanding the cyclic permutation of each chunk of VEC_SIZE adjacent elements of A */
+    vA = new Vec4d[n * vN];
+    for(int i=0; i<n; i++)
+        for(int j=0; j < vN; j += VEC_SIZE)
+        {
+            Vec4d nextV;
+            nextV.load(padA + j + i * vN);
+            for(int k=0; k<VEC_SIZE; k++)
+            {
+                vA[k + j + i * vN] = nextV;
+                nextV = permute4<1,2,3,0>(nextV); //Cycle around one position
+            }
+        }
+
+    /* Load the vector version of B using a special lookup pattern */
+    vB = new Vec4d[vN * vN];
+
 
 }
 
-void DgemmVector::store_vectors(int n, double *C, int vec_mat_stop, const Vec4d *vC) {
-    /* Initialize counters for store loop */
-    int vec_flat_index = 0;
-    int scalar_flat_offset = 0;
-    int remainder = n % VEC_SIZE;
+void DgemmVector::store_vectors(int n, double *C, const Vec4d *vC) {
 
-    /* Store vectors to scalar arrays */
-    for (int i=0; i<n; i++)
-    {
-        /* Fill main portion of row */
-        for (int j=0; j<vec_mat_stop; j++)
-        {
-            vC[vec_flat_index].store(C + scalar_flat_offset); //Initialize accumulator
-
-            /* Update index */
-            vec_flat_index++;
-            scalar_flat_offset += VEC_SIZE;
-        }
-
-        /* Fill end of row that partially oversteps original row end */
-        vC[vec_flat_index].store_partial(remainder, C + scalar_flat_offset);
-
-        /* Update index */
-        vec_flat_index++;
-        scalar_flat_offset += remainder;
-    }
 }
