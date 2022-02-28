@@ -5,13 +5,8 @@
 #ifndef VCL_TEST_DGEMM_NAIVE_H
 #define VCL_TEST_DGEMM_NAIVE_H
 
-#include "dgemm_utils.h"
 #include "dgemm.h"
 
-class DgemmNaive : public Dgemm {
-public:
-    void square_dgemm (int n, const double* A, const double* B, double* C) override;
-    const char* dgemm_desc() override;
-};
+class DgemmNonBlocked : public Dgemm {};
 
 #endif //VCL_TEST_DGEMM_NAIVE_H

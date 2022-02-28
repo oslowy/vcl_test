@@ -6,9 +6,7 @@
 #include <cfloat>  // For: DBL_EPSILON
 #include <cmath>   // For: fabs
 
-#include "dgemm_naive.h"
-#include "dgemm_blocked.h"
-#include "dgemm_blocked_vector.h"
+#include "dgemm_set.h"
 
 #ifdef GETTIMEOFDAY
 #include <sys/time.h> // For struct timeval, gettimeofday
@@ -129,7 +127,8 @@ int test_sizes[] =
 int main (int argc, char **argv)
 {
     /* Different types of Dgemm objects */
-    Dgemm* dgemms[] = {new DgemmNaive(), new DgemmBlocked(), /* new DgemmBlockedVector() */};
+    Dgemm* dgemms[] = {new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccKIJ(),
+                       new DgemmBlocked1AccIJK(), new DgemmBlocked1AccKIJ()/* , new DgemmVector() */};
 
     /* Test sizes should highlight performance dips at multiples of certain powers-of-two */
     int nsizes = sizeof(test_sizes)/sizeof(test_sizes[0]);
