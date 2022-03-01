@@ -51,119 +51,119 @@ build cmake_object_order_depends_target_vcl_test: phony || CMakeFiles/vcl_test.d
 
 build CMakeFiles/vcl_test.dir/main.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/main.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\main.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/dgemm_vector.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/dgemm_vector.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\dgemm_vector.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmNonBlocked1AccIJK.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmNonBlocked1AccIJK.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmNonBlocked1AccIJK.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmNonBlocked1AccKIJ.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmNonBlocked1AccKIJ.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmNonBlocked1AccKIJ.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmBlocked1AccIJK.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmBlocked1AccIJK.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmBlocked1AccIJK.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmBlocked1AccKIJ.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmBlocked1AccKIJ.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmBlocked1AccKIJ.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmVectorNonBlocked.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmVectorNonBlocked.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmVectorBlocked.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmVectorBlocked.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmVectorBlocked.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmBlocked.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmBlocked.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmBlocked.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmVectorNonBlockedIJK.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmVectorNonBlockedIJK.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmVectorNonBlockedIJK.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmVectorNonBlockedKIJ.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmVectorNonBlockedKIJ.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmVectorNonBlockedKIJ.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmVectorBlockedIJK.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmVectorBlockedIJK.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmVectorBlockedIJK.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmVectorBlockedKIJ.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmVectorBlockedKIJ.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmVectorBlockedKIJ.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmNonBlocked4AccIJK.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmNonBlocked4AccIJK.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmNonBlocked4AccIJK.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmNonBlocked4AccKIJ.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmNonBlocked4AccKIJ.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmNonBlocked4AccKIJ.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmBlocked4AccIJK.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmBlocked4AccIJK.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmBlocked4AccIJK.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 build CMakeFiles/vcl_test.dir/DgemmBlocked4AccKIJ.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmBlocked4AccKIJ.cpp || cmake_object_order_depends_target_vcl_test
   DEP_FILE = CMakeFiles\vcl_test.dir\DgemmBlocked4AccKIJ.cpp.obj.d
-  FLAGS = -g -O2 -std=gnu++17
+  FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
