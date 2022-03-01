@@ -11,6 +11,10 @@
 #include "DgemmVectorNonBlockedJKI.h"
 #include "DgemmVectorBlockedIJK.h"
 #include "DgemmVectorBlockedJKI.h"
+#include "DgemmNonBlocked4AccIJK.h"
+#include "DgemmNonBlocked4AccJKI.h"
+#include "DgemmBlocked4AccIJK.h"
+#include "DgemmBlocked4AccJKI.h"
 
 #ifdef GETTIMEOFDAY
 #include <sys/time.h> // For struct timeval, gettimeofday
@@ -127,12 +131,16 @@ int test_sizes[] =
     { 31, 32, 96, 97, 127, 128, 129, 191, 192, 229, 255, 256, 257,
       319, 320, 321, 417, 479, 480, 511, 512, 639, 640, 767, 768, 769 };
 
-/* The benchmarking program */
+/* The benchmarking program
+ *
+ * Warning: will use a lot of stack memory. Please make sure your stack limit is around 64MB or higher. */
 int main (int argc, char **argv)
 {
     /* Different types of Dgemm objects */
     Dgemm* dgemms[] = {new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccJKI(),
                        new DgemmBlocked1AccIJK(), new DgemmBlocked1AccJKI(),
+                       new DgemmNonBlocked4AccIJK(), new DgemmNonBlocked4AccJKI(),
+                       new DgemmBlocked4AccIJK(), new DgemmBlocked4AccJKI(),
                        new DgemmVectorNonBlockedIJK(), new DgemmVectorNonBlockedJKI(),
                        new DgemmVectorBlockedIJK(), new DgemmVectorBlockedJKI()};
 
