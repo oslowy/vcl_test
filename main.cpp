@@ -25,9 +25,9 @@
 // on Lonestar5
 // 2.6GHz * 4 vector width * 2 flops for FMA * 2 instrs/cycle = 41.6GFLOPS
 /*
- * TODO need to research specs for current machine (not Lonestar5)
+ * TODO this updated value should be checked against the BLAS benchmark
  */
-#define MAX_SPEED 41.6
+#define MAX_SPEED 35.1
 
 /* reference_dgemm wraps a call to the BLAS-3 routine DGEMM, via the standard FORTRAN interface - hence the reference semantics. */
 #define DGEMM dgemm_
