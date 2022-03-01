@@ -16,7 +16,7 @@ void DgemmNonBlocked1AccIJK::square_dgemm(int n, const double *A, const double *
         for (int j = 0; j < n; ++j)
         {
             /* Compute C(i,j) */
-            double cij = C[i+j*n];
+            double cij = 0.0;
             for( int k = 0; k < n; k++ )
                 cij += A[i+k*n] * B[k+j*n];
             C[i+j*n] = cij;

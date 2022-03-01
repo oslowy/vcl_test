@@ -13,7 +13,7 @@ void DgemmBlocked1AccJKI::do_block (int lda, int M, int N, int K, const double* 
         for (int k = 0; k < K; ++k)
         {
             /* Pre-store B(k, j) to avoid repeated memory access */
-            double bkj = A[k+j*lda];
+            double bkj = B[k+j*lda];
 
             /* Compute next partial sum on C(i,j) */
             for(int i = 0; i < M; ++i)

@@ -11,7 +11,7 @@ void DgemmVectorNonBlockedIJK::vector_dgemm(int vM, int vN, int vK, const Vec4d 
         for (int j = 0; j < vK; ++j)
         {
             /* Compute vC(i,j) */
-            Vec4d cij = vC[i+j*vM];
+            Vec4d cij = 0.0;
             for( int k = 0; k < vN; k++ )
                 cij += vA[i+k*vM] * vB[k+j*vN];
             vC[i+j*vM] = cij;
