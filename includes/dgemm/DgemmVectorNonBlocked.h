@@ -6,7 +6,7 @@
 #define VCL_TEST_DGEMMVECTORNONBLOCKED_H
 
 
-#include "dgemm_vector.h"
+#include "DgemmVector.h"
 
 class DgemmVectorNonBlocked: public DgemmVector {
 

@@ -6,8 +6,12 @@
 #define VCL_TEST_DGEMMNONBLOCKED4ACCJKI_H
 
 
-class DgemmNonBlocked4AccJKI {
+#include "DgemmNonBlocked.h"
 
+class DgemmNonBlocked4AccJKI: public DgemmNonBlocked {
+public:
+    void square_dgemm (int n, const double* A, const double* B, double* C) override;
+    const char* dgemm_desc() override;
 };
 
 

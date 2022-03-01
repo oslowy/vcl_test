@@ -5,7 +5,7 @@
 #ifndef VCL_TEST_DGEMMBLOCKED_H
 #define VCL_TEST_DGEMMBLOCKED_H
 
-#include "dgemm.h"
+#include "Dgemm.h"
 
 class DgemmBlocked : public Dgemm {
 public:

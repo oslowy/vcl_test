@@ -6,8 +6,8 @@
 #define VCL_TEST_DGEMMNONBLOCKED1ACCIJK_H
 
 #include "dgemm_utils.h"
-#include "dgemm.h"
-#include "dgemm_naive.h"
+#include "Dgemm.h"
+#include "DgemmNonBlocked.h"
 
 class DgemmNonBlocked1AccIJK : public DgemmNonBlocked {
 public:

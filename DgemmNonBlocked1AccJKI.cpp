@@ -23,5 +23,5 @@ void DgemmNonBlocked1AccJKI::square_dgemm(int n, const double *A, const double *
 }
 
 const char *DgemmNonBlocked1AccJKI::dgemm_desc() {
-    return "Non-blocked DGEMM with j-k-i loop order";
+    return "Non-blocked DGEMM with j-k-i loop order and one accumulator";
 }

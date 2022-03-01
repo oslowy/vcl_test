@@ -9,6 +9,8 @@
 #include "dgemm_set.h"
 #include "DgemmVectorNonBlockedIJK.h"
 #include "DgemmVectorNonBlockedJKI.h"
+#include "DgemmVectorBlockedIJK.h"
+#include "DgemmVectorBlockedJKI.h"
 
 #ifdef GETTIMEOFDAY
 #include <sys/time.h> // For struct timeval, gettimeofday
@@ -131,7 +133,8 @@ int main (int argc, char **argv)
     /* Different types of Dgemm objects */
     Dgemm* dgemms[] = {new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccJKI(),
                        new DgemmBlocked1AccIJK(), new DgemmBlocked1AccJKI(),
-                       new DgemmVectorNonBlockedIJK(), new DgemmVectorNonBlockedJKI()};
+                       new DgemmVectorNonBlockedIJK(), new DgemmVectorNonBlockedJKI(),
+                       new DgemmVectorBlockedIJK(), new DgemmVectorBlockedJKI()};
 
     /* Test sizes should highlight performance dips at multiples of certain powers-of-two */
     int nsizes = sizeof(test_sizes)/sizeof(test_sizes[0]);
@@ -188,6 +191,8 @@ int main (int argc, char **argv)
         /* Printing average percentage to screen */
         printf("Average percentage of Peak = %g\n",aveper);
 
+        /* Free memory used by the dgemm object to save room for the next one */
+        delete dgemm;
         free (buf);
     }
 

@@ -6,13 +6,13 @@
 #define VCL_TEST_DGEMMVECTORNONBLOCKEDIJK_H
 
 
-#include "dgemm_vector.h"
+#include "DgemmVector.h"
 
 class DgemmVectorNonBlockedIJK: public DgemmVector {
 public:
     const char* dgemm_desc() override;
 private:
-    void vector_dgemm(int n, int adjustN, int vN, const Vec4d *vA, const Vec4d *vB, Vec4d *vC) override;
+    void vector_dgemm(int vM, int vN, int vK, const Vec4d *vA, const Vec4d *vB, Vec4d *vC) override;
 };
 
 
