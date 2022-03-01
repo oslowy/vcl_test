@@ -7,8 +7,9 @@
 
 void DgemmVector::square_dgemm(int n, const double *A, const double *B, double *C) {
     /* Load data into vectors */
-    int adjustN, vN; //Will hold number of elements in a row of the vector version of the output matrix
-    Vec4d *vA, *vB, *vC;
+    int adjustN = n + (VEC_SIZE - (n % VEC_SIZE)) % VEC_SIZE; //Round up to a multiple of VEC_SIZE
+    int vN = adjustN / VEC_SIZE; //Will hold number of rows of the vector version of the output matrix
+    Vec4d vA[vN * adjustN], vB[adjustN * n], vC[vN * n];
     /* vA: vN rows x adjustN columns
      * vB: adjustN rows x n columns
      * vC: vN rows x n columns */
@@ -20,17 +21,12 @@ void DgemmVector::square_dgemm(int n, const double *A, const double *B, double *
 
     /* Extract data from vectors to final matrix */
     store_vectors(n, adjustN, vN, C, vC);
-
-    /* Delete the vector arrays after no longer used */
-    delete[] vA;
-    delete[] vB;
-    delete[] vC;
 }
 
-void DgemmVector::load_vectors(int n, int &adjustN, int &vN, const double *A, const double *B, Vec4d *&vA, Vec4d *&vB,
-                               Vec4d *&vC) {
+void DgemmVector::load_vectors(int n, int adjustN, int vN, const double *A, const double *B, Vec4d *vA, Vec4d *vB,
+                               Vec4d *vC) {
     /* Pad the scalar array with zeros if its size is not a multiple of the vector size */
-    double *padA, *padB;
+    double padA[n * adjustN], padB[adjustN * adjustN];
     /* padA: n rows x adjustN columns
      * padB: adjustN rows x adjustN columns
      * padC: n rows x adjustN columns */
@@ -46,10 +42,6 @@ void DgemmVector::load_vectors(int n, int &adjustN, int &vN, const double *A, co
 
     /* Initialize vC */
     load_vC(n, vN, vC);
-
-    /* Free memory used for padded containers */
-    delete[] padA;
-    delete[] padB;
 }
 
 void DgemmVector::store_vectors(int n, int adjustN, int vN, double *C, const Vec4d *vC) {
@@ -66,11 +58,7 @@ void DgemmVector::store_vectors(int n, int adjustN, int vN, double *C, const Vec
             C[i + j * n] = padC[i + j * adjustN];
 }
 
-void DgemmVector::pad_scalar_mats(int n, int &adjustN, const double *A, const double *B, double *&padA, double *&padB) {
-    adjustN = n + (VEC_SIZE - (n % VEC_SIZE)) % VEC_SIZE; //Round up to a multiple of VEC_SIZE
-    padA = new double[adjustN * adjustN];
-    padB = new double[adjustN * n];
-
+void DgemmVector::pad_scalar_mats(int n, int &adjustN, const double *A, const double *B, double *padA, double *padB) {
     /* Copy existing data */
     for(int i=0; i<n; i++)
         for(int j=0; j<n; j++)
@@ -88,11 +76,9 @@ void DgemmVector::pad_scalar_mats(int n, int &adjustN, const double *A, const do
         for(int j=0; j < adjustN; j++)
             padA[i + j * adjustN] = 0.0;
     }
-
 }
 
 void DgemmVector::load_vA(int &vN, int adjustN, double *padA, Vec4d *&vA) {
-    vN = adjustN / VEC_SIZE; //Initialize vN here
     vA = new Vec4d[vN * adjustN];
     Vec4q lookup_block_row = {0, 1, 2, 3};
     Vec4q lookup_block_col = {0, 1, 2, 3};

@@ -129,8 +129,8 @@ int test_sizes[] =
 int main (int argc, char **argv)
 {
     /* Different types of Dgemm objects */
-    Dgemm* dgemms[] = {/* new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccKIJ(),
-                       new DgemmBlocked1AccIJK(), new DgemmBlocked1AccKIJ(), */
+    Dgemm* dgemms[] = {new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccKIJ(),
+                       new DgemmBlocked1AccIJK(), new DgemmBlocked1AccKIJ(),
                        new DgemmVectorNonBlockedIJK(), new DgemmVectorNonBlockedKIJ()};
 
     /* Test sizes should highlight performance dips at multiples of certain powers-of-two */
