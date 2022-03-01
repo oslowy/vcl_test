@@ -6,8 +6,8 @@
 #define VCL_TEST_DGEMM_SET_H
 
 #include "DgemmNonBlocked1AccIJK.h"
-#include "DgemmNonBlocked1AccKIJ.h"
+#include "DgemmNonBlocked1AccJKI.h"
 #include "DgemmBlocked1AccIJK.h"
-#include "DgemmBlocked1AccKIJ.h"
+#include "DgemmBlocked1AccJKI.h"
 
 #endif //VCL_TEST_DGEMM_SET_H

@@ -2,13 +2,13 @@
 // Created by Orion on 2/28/2022.
 //
 
-#ifndef VCL_TEST_DGEMMVECTORNONBLOCKEDKIJ_H
-#define VCL_TEST_DGEMMVECTORNONBLOCKEDKIJ_H
+#ifndef VCL_TEST_DGEMMVECTORNONBLOCKEDJKI_H
+#define VCL_TEST_DGEMMVECTORNONBLOCKEDJKI_H
 
 
 #include "dgemm_vector.h"
 
-class DgemmVectorNonBlockedKIJ: public DgemmVector {
+class DgemmVectorNonBlockedJKI: public DgemmVector {
 public:
     const char* dgemm_desc() override;
 private:
@@ -16,4 +16,4 @@ private:
 };
 
 
-#endif //VCL_TEST_DGEMMVECTORNONBLOCKEDKIJ_H
+#endif //VCL_TEST_DGEMMVECTORNONBLOCKEDJKI_H
