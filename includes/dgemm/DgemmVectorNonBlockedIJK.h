@@ -9,7 +9,9 @@
 #include "dgemm_vector.h"
 
 class DgemmVectorNonBlockedIJK: public DgemmVector {
-protected:
+public:
+    const char* dgemm_desc() override;
+private:
     void vector_dgemm(int n, int adjustN, int vN, const Vec4d *vA, const Vec4d *vB, Vec4d *vC) override;
 };
 

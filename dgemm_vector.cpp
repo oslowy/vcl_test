@@ -39,13 +39,17 @@ void DgemmVector::load_vectors(int n, int &adjustN, int &vN, const double *A, co
     pad_scalar_mats(n, adjustN, A, B, padA, padB);
 
     /* Load the vector version of A by expanding the cyclic permutation of each chunk of VEC_SIZE adjacent elements of A */
-    load_vA(n, adjustN, padA, vA);
+    load_vA(vN, adjustN, padA, vA);
 
     /* Load the vector version of B by looking up elements in diagonal traversal wrapping around VEC_SIZE square blocks of B */
-    load_vB(adjustN, vN, padB, vB);
+    load_vB(adjustN, n, padB, vB);
 
     /* Initialize vC */
     load_vC(n, vN, vC);
+
+    /* Free memory used for padded containers */
+    delete[] padA;
+    delete[] padB;
 }
 
 void DgemmVector::store_vectors(int n, int adjustN, int vN, double *C, const Vec4d *vC) {
@@ -63,7 +67,7 @@ void DgemmVector::store_vectors(int n, int adjustN, int vN, double *C, const Vec
 }
 
 void DgemmVector::pad_scalar_mats(int n, int &adjustN, const double *A, const double *B, double *&padA, double *&padB) {
-    adjustN = n + n % VEC_SIZE;
+    adjustN = n + (VEC_SIZE - (n % VEC_SIZE)) % VEC_SIZE; //Round up to a multiple of VEC_SIZE
     padA = new double[adjustN * adjustN];
     padB = new double[adjustN * n];
 
@@ -87,7 +91,7 @@ void DgemmVector::pad_scalar_mats(int n, int &adjustN, const double *A, const do
 
 }
 
-void DgemmVector::load_vA(int adjustN, int &vN, double *padA, Vec4d *&vA) {
+void DgemmVector::load_vA(int &vN, int adjustN, double *padA, Vec4d *&vA) {
     vN = adjustN / VEC_SIZE; //Initialize vN here
     vA = new Vec4d[vN * adjustN];
     Vec4q lookup_block_row = {0, 1, 2, 3};
@@ -100,7 +104,9 @@ void DgemmVector::load_vA(int adjustN, int &vN, double *padA, Vec4d *&vA) {
              * copies of vB in the correct order */
             for(int k=0; k < VEC_SIZE; k++)
             {
-                vA[i + (j + k) * adjustN] = lookup<VEC_SIZE>(i * VEC_SIZE + lookup_block_row + (j + lookup_block_col) * adjustN, padA);
+                Vec4q lookup_i = i * VEC_SIZE + lookup_block_row + (j + lookup_block_col) * adjustN;
+                Vec4d next_v = lookup<VEC_SIZE>(lookup_i, padA);
+                vA[i + (j + k) * vN] = next_v;
                 lookup_block_col = permute4<1, 2, 3, 0>(lookup_block_col);
             }
         }

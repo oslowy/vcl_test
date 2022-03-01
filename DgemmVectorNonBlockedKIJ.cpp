@@ -16,3 +16,7 @@ void DgemmVectorNonBlockedKIJ::vector_dgemm(int n, int adjustN, int vN, const Ve
                 vC[i+j*vN] += aik * vB[k+j*adjustN];
         }
 }
+
+const char *DgemmVectorNonBlockedKIJ::dgemm_desc() {
+    return "Non-blocked Vectorized DGEMM with k-i-j loop order";
+}

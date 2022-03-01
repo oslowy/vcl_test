@@ -17,3 +17,7 @@ void DgemmVectorNonBlockedIJK::vector_dgemm(int n, int adjustN, int vN, const Ve
             vC[i+j*vN] = cij;
         }
 }
+
+const char *DgemmVectorNonBlockedIJK::dgemm_desc() {
+    return "Non-blocked Vectorized DGEMM with i-j-k loop order";
+}

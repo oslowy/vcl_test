@@ -6,8 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(includes/dgemm)
 include_directories(includes/vcl)
 
-add_compile_options(
-        -O2
-)
+#add_compile_options( -O2)
 
 add_executable(vcl_test main.cpp dgemm_vector.cpp DgemmNonBlocked1AccIJK.cpp includes/dgemm/DgemmNonBlocked1AccIJK.h DgemmNonBlocked1AccKIJ.cpp includes/dgemm/DgemmNonBlocked1AccKIJ.h DgemmBlocked1AccIJK.cpp includes/dgemm/DgemmBlocked1AccIJK.h DgemmBlocked1AccKIJ.cpp includes/dgemm/DgemmBlocked1AccKIJ.h includes/dgemm/dgemm_set.h DgemmVectorNonBlocked.cpp includes/dgemm/DgemmVectorNonBlocked.h DgemmVectorBlocked.cpp includes/dgemm/DgemmVectorBlocked.h DgemmBlocked.cpp DgemmVectorNonBlockedIJK.cpp includes/dgemm/DgemmVectorNonBlockedIJK.h DgemmVectorNonBlockedKIJ.cpp includes/dgemm/DgemmVectorNonBlockedKIJ.h DgemmVectorBlockedIJK.cpp includes/dgemm/DgemmVectorBlockedIJK.h DgemmVectorBlockedKIJ.cpp includes/dgemm/DgemmVectorBlockedKIJ.h DgemmNonBlocked4AccIJK.cpp includes/dgemm/DgemmNonBlocked4AccIJK.h DgemmNonBlocked4AccKIJ.cpp includes/dgemm/DgemmNonBlocked4AccKIJ.h DgemmBlocked4AccIJK.cpp includes/dgemm/DgemmBlocked4AccIJK.h DgemmBlocked4AccKIJ.cpp includes/dgemm/DgemmBlocked4AccKIJ.h)
