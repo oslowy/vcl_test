@@ -14,7 +14,7 @@ void DgemmNonBlocked1AccJKI::square_dgemm(int n, const double *A, const double *
         for (int k = 0; k < n; ++k)
         {
             /* Pre-store B(k, j) to avoid repeated memory access */
-            double bkj = A[k+j*n];
+            double bkj = B[k+j*n];
 
             /* Compute next partial sum on C(i,j) */
             for( int i = 0; i < n; i++ )
