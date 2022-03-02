@@ -5,7 +5,7 @@
 
 #include <cfloat>  // For: DBL_EPSILON
 #include <cmath>   // For: fabs
-#include "cblas.h"
+#include <cblas.h>
 
 #include "dgemm_set.h"
 #include "DgemmVectorNonBlockedIJK.h"
