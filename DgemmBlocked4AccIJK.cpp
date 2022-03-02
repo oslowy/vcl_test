@@ -17,10 +17,8 @@ void DgemmBlocked4AccIJK::do_block(int lda, int M, int N, int K, const double *A
         for (int j = 0; j < N; ++j)
         {
             /* Initialize the accumulators */
-            double acc0 = 0.0;
-            double acc1 = 0.0;
-            double acc2 = 0.0;
-            double acc3 = 0.0;
+            double acc0, acc1, acc2, acc3;
+            acc0 = acc1 = acc2 = acc3 = C[i+j*lda];
 
             /* Compute the partial sums for four accumulators */
             int k;

@@ -15,7 +15,7 @@ void DgemmBlocked1AccIJK::do_block (int lda, int M, int N, int K, const double* 
         for (int j = 0; j < N; ++j)
         {
             /* Compute C(i,j) */
-            double cij = 0.0;
+            double cij = C[i+j*lda]; //Need to retrieve here because each block is only a partial sum
             for (int k = 0; k < K; ++k)
                 cij += A[i+k*lda] * B[k+j*lda];
             C[i+j*lda] = cij;
