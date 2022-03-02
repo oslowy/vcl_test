@@ -135,10 +135,10 @@ int main()
 {
     /* Different types of Dgemm objects */
     Dgemm* dgemms[] = {new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccJKI(),
-                       new DgemmBlocked1AccIJK(), new DgemmBlocked1AccJKI(),
                        new DgemmNonBlocked4AccIJK(), new DgemmNonBlocked4AccJKI(),
-                       new DgemmBlocked4AccIJK(), new DgemmBlocked4AccJKI(),
                        new DgemmVectorNonBlockedIJK(), new DgemmVectorNonBlockedJKI(),
+                       new DgemmBlocked1AccIJK(), new DgemmBlocked1AccJKI(),
+                       new DgemmBlocked4AccIJK(), new DgemmBlocked4AccJKI(),
                        new DgemmVectorBlockedIJK(), new DgemmVectorBlockedJKI()};
 
     /* Test sizes should highlight performance dips at multiples of certain powers-of-two */
