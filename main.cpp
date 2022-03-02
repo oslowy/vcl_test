@@ -16,6 +16,7 @@
 #include "DgemmNonBlocked4AccJKI.h"
 #include "DgemmBlocked4AccIJK.h"
 #include "DgemmBlocked4AccJKI.h"
+#include "DgemmReference.h"
 
 #ifdef GETTIMEOFDAY
 #include <sys/time.h> // For struct timeval, gettimeofday
@@ -134,7 +135,8 @@ int test_sizes[] =
 int main()
 {
     /* Different types of Dgemm objects */
-    Dgemm* dgemms[] = {new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccJKI(),
+    Dgemm* dgemms[] = {new DgemmReference(),
+                       new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccJKI(),
                        new DgemmNonBlocked4AccIJK(), new DgemmNonBlocked4AccJKI(),
                        new DgemmBlocked1AccIJK(), new DgemmBlocked1AccJKI(),
                        new DgemmBlocked4AccIJK(), new DgemmBlocked4AccJKI(),
