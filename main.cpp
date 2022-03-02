@@ -134,7 +134,7 @@ int test_sizes[] =
 /* The benchmarking program
  *
  * Warning: will use a lot of stack memory. Please make sure your stack limit is around 64MB or higher. */
-int main (int argc, char **argv)
+int main ()
 {
     /* Different types of Dgemm objects */
     Dgemm* dgemms[] = {new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccJKI(),
