@@ -33,15 +33,13 @@
 /* reference_dgemm wraps a call to the BLAS-3 routine DGEMM, via the CBLAS dgemm interface - hence the reference semantics. */
 void reference_dgemm (int N, double ALPHA, double* A, double* B, double* C)
 {
-    char TRANSA = 'N';
-    char TRANSB = 'N';
     int M = N;
     int K = N;
     double BETA = 1.;
     int LDA = N;
     int LDB = N;
     int LDC = N;
-    cblas_dgemm(&TRANSA, &TRANSB, &M, &N, &K, &ALPHA, A, &LDA, B, &LDB, &BETA, C, &LDC);
+    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, &M, &N, &K, &ALPHA, A, &LDA, B, &LDB, &BETA, C, &LDC);
 }
 
 /* Your function must have the following signature: */
