@@ -4,12 +4,12 @@
 
 #include "DgemmVectorNonBlockedJKI.h"
 
-void DgemmVectorNonBlockedJKI::vector_dgemm(int vM, int vN, int vK, const Vec4d *vA, const Vec4d *vB, Vec4d *vC) {
-    for ( int j = 0; j < vK; j++ )
-        for (int k = 0; k < vN; ++k)
+void DgemmVectorNonBlockedJKI::vector_dgemm(int vM, int n, const Vec4d *vA, const double *B, Vec4d *vC) {
+    for (int j = 0; j < n; j++ )
+        for (int k = 0; k < n; ++k)
         {
             /* Pre-store vA[i][k] to avoid repeated memory access */
-            Vec4d bkj = vB[k+j*vN];
+            double bkj = B[k+j*n];
 
             /* Compute next partial sum of vC(i,j) */
             for(int i = 0; i < vM; ++i)

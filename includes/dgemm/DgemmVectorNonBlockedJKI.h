@@ -12,7 +12,7 @@ class DgemmVectorNonBlockedJKI: public DgemmVector {
 public:
     const char* dgemm_desc() override;
 private:
-    void vector_dgemm(int vM, int vN, int vK, const Vec4d *vA, const Vec4d *vB, Vec4d *vC) override;
+    void vector_dgemm(int vM, int n, const Vec4d *vA, const double *B, Vec4d *vC) override;
 };
 
 
