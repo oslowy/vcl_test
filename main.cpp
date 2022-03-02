@@ -39,7 +39,7 @@ void reference_dgemm (int N, double ALPHA, double* A, double* B, double* C)
     int LDA = N;
     int LDB = N;
     int LDC = N;
-    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, &M, &N, &K, &ALPHA, A, &LDA, B, &LDB, &BETA, C, &LDC);
+    cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC);
 }
 
 /* Your function must have the following signature: */
