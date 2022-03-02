@@ -15,7 +15,7 @@ void DgemmVectorBlockedIJK::do_block(int vM, int n, int M, int N, int K, const V
         for (int j = 0; j < N; ++j)
         {
             /* Compute C(i,j) */
-            Vec4d cij = 0.0;
+            Vec4d cij = vC[i + j * vM];
             for (int k = 0; k < K; ++k)
                 cij += vA[i + k * vM] * B[k + j * n];
             vC[i + j * vM] = cij;
