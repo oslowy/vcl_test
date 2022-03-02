@@ -42,7 +42,7 @@ void reference_dgemm (int N, double ALPHA, double* A, double* B, double* C)
     int LDA = N;
     int LDB = N;
     int LDC = N;
-    //DGEMM(&TRANSA, &TRANSB, &M, &N, &K, &ALPHA, A, &LDA, B, &LDB, &BETA, C, &LDC);
+    DGEMM(&TRANSA, &TRANSB, &M, &N, &K, &ALPHA, A, &LDA, B, &LDB, &BETA, C, &LDC);
 }
 
 /* Your function must have the following signature: */
@@ -187,7 +187,7 @@ int main (int argc, char **argv)
             printf ("Size: %d\tMflop/s: %8g\tPercentage:%6.2lf\n", n, Mflops_s[isize],per[isize]);
 
             /* Ensure that error does not exceed the theoretical error bound. */
-            // check(dgemm, n, A, B, C); //disabled
+            check(dgemm, n, A, B, C);
         }
 
         /* Calculating average percentage of peak reached by algorithm */
