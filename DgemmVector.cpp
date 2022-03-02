@@ -70,15 +70,16 @@ void DgemmVector::load_vC(int vM, int n, Vec4d *vC) {
 }
 
 void DgemmVector::store_vectors(int vM, int n, double *C, const Vec4d *vC) {
-    double padC[vM * n];
+    int padN = vM * VEC_SIZE;
+    double padC[padN * n];
 
     /* Store padded result */
     for(int i=0; i<vM; i++)
         for(int j=0; j < n; j++)
-            vC[i + j * vM].store(padC + i * VEC_SIZE + j * n);
+            vC[i + j * vM].store(padC + i * VEC_SIZE + j * padN);
 
     /* Unpad result while copying to final result */
     for(int i=0; i < n; i++)
         for(int j=0; j < n; j++)
-            C[i + j * n] = padC[i + j * n];
+            C[i + j * n] = padC[i + j * padN];
 }
