@@ -9,9 +9,8 @@ void DgemmVector::square_dgemm(int n, const double *A, const double *B, double *
     /* Load data into vectors */
     int vM = n / VEC_SIZE + (n % VEC_SIZE == 0 ? 0 : 1); //Round up to a multiple of VEC_SIZE
     Vec4d vA[vM * n], vC[vM * n];
-    /* vA: vM rows x vN columns
-     * vB: vN rows x vK columns
-     * vC: vM rows x vK columns */
+    /* vA: vM rows x n columns
+     * vC: vM rows x n columns */
 
     load_vectors(vM, n, A, vA, vC);
 
@@ -67,7 +66,7 @@ void DgemmVector::load_vA(int vM, int n, Vec4d *vA, double *padA) {
 void DgemmVector::load_vC(int vM, int n, Vec4d *vC) {
     for(int i=0; i<vM; i++)
         for(int j=0; j < n; j++)
-            vC[j + i * vM] = 0.0;
+            vC[i + j * vM] = 0.0;
 }
 
 void DgemmVector::store_vectors(int vM, int n, double *C, const Vec4d *vC) {
