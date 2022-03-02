@@ -2,6 +2,7 @@
 // Created by Orion on 2/22/2022.
 //
 
+#include <cstdio>
 #include "DgemmVector.h"
 #include "dgemm_utils.h"
 
@@ -21,8 +22,7 @@ void DgemmVector::square_dgemm(int n, const double *A, const double *B, double *
     store_vectors(vM, n, C, vC);
 }
 
-void
-DgemmVector::load_vectors(int vM, int n, const double *A, Vec4d *vA, Vec4d *vC) {
+void DgemmVector::load_vectors(int vM, int n, const double *A, Vec4d *vA, Vec4d *vC) {
     /* Pad the scalar array with zeros if its size is not a multiple of the vector size */
     int padN = vM * VEC_SIZE;
     double padA[padN * n];
@@ -33,7 +33,9 @@ DgemmVector::load_vectors(int vM, int n, const double *A, Vec4d *vA, Vec4d *vC) 
     pad_scalar_mat(padN, n, padA, A);
 
     /* Load the vector version of A by expanding the cyclic permutation of each chunk of VEC_SIZE adjacent elements of A */
-    load_vA(vM, n, vA, padA);
+    load_vA(vM, padN, n, vA, padA);
+
+    printf("\n");
 
     /* Initialize vC */
     load_vC(vM, n, vC);
@@ -55,11 +57,11 @@ void DgemmVector::pad_scalar_mat(int padN, int n, double *padA, const double *A)
     }
 }
 
-void DgemmVector::load_vA(int vM, int n, Vec4d *vA, double *padA) {
+void DgemmVector::load_vA(int vM, int padN, int n, Vec4d *vA, double *padA) {
     for(int i=0; i < vM; i++) //Row of vA
         for(int j=0; j < n; j++) //Column of vA (incremented by block of VEC_SIZE)
         {
-            vA[i + j * vM].load(padA + i * VEC_SIZE + j * n);
+            vA[i + j * vM].load(padA + i * VEC_SIZE + j * padN);
         }
 }
 

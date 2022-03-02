@@ -101,16 +101,6 @@ void check(Dgemm* dgemm, int n, double* A, double* B, double* C) {
         memset (C, 0, n * n * sizeof(double));
         dgemm->square_dgemm(n, A, B, C);
 
-        /* Print out the contents of the array to check (DEBUG) */
-        for(int i=0; i<n; i++)
-        {
-            for(int j=0; j<n; j++) {
-                printf("%f ", C[i + j * n]);
-            }
-
-            printf("\n");
-        }
-
         /* Do not explicitly check that A and B were unmodified on square_dgemm exit
          *  - if they were, the following will most likely detect it:
          * C := C - A * B, computed with reference_dgemm */

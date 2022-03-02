@@ -7,7 +7,7 @@
 void DgemmVectorNonBlockedIJK::vector_dgemm(int vM, int n, const Vec4d *vA, const double *B, Vec4d *vC) {
     /* For each row i of vA */
     for (int i = 0; i < vM; ++i)
-        /* For each column j of vB */
+        /* For each column j of B */
         for (int j = 0; j < n; ++j)
         {
             /* Compute vC(i,j) */

@@ -16,7 +16,7 @@ public:
 
 protected:
     static void pad_scalar_mat(int padN, int n, double *padA, const double *A);
-    static void load_vA(int vM, int n, Vec4d *vA, double *padA);
+    static void load_vA(int vM, int padN, int n, Vec4d *vA, double *padA);
     static void load_vC(int vM, int n, Vec4d *vC);
 
     static void load_vectors(int vM, int n, const double *A, Vec4d *vA, Vec4d *vC);
