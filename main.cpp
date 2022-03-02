@@ -24,12 +24,12 @@
 #include <ctime> // For struct timespec, clock_gettime, CLOCK_MONOTONIC
 #endif
 
-// on Lonestar5
-// 2.6GHz * 4 vector width * 2 flops for FMA * 2 instrs/cycle = 41.6GFLOPS
+// on AMD Ryzen ThreadRipper 3970X
+// 3.7GHz * 4 vector width * 2 FMA units * 2 instrs/cycle on FMA = 59.2GFLOPS
 /*
  * TODO this updated value should be checked against the BLAS benchmark
  */
-#define MAX_SPEED 35.1
+#define MAX_SPEED 59.2
 
 /* reference_dgemm wraps a call to the BLAS-3 routine DGEMM, via the CBLAS dgemm interface - hence the reference semantics. */
 void reference_dgemm (int N, double ALPHA, double* A, double* B, double* C)
