@@ -17,7 +17,7 @@ void DgemmBlocked4AccIJK::do_block(int lda, int M, int N, int K, const double *A
         for (int j = 0; j < N; ++j)
         {
             /* Initialize the accumulators */
-            double acc0 = C[i+j*lda];
+            double acc0 = C[i+j*lda]; //Only retrieve for one accumulator to avoid extra factor of 4 at the end
             double acc1 = 0.0;
             double acc2 = 0.0;
             double acc3 = 0.0;
