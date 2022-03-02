@@ -5,7 +5,7 @@
 
 #include <cfloat>  // For: DBL_EPSILON
 #include <cmath>   // For: fabs
-#include <cblas.h>
+#include <cblas.h> // For: cblas_dgemm
 
 #include "dgemm_set.h"
 #include "DgemmVectorNonBlockedIJK.h"
@@ -30,9 +30,7 @@
  */
 #define MAX_SPEED 35.1
 
-/* reference_dgemm wraps a call to the BLAS-3 routine DGEMM, via the standard FORTRAN interface - hence the reference semantics. */
-#define DGEMM cblas_dgemm
-extern void DGEMM (char*, char*, int*, int*, int*, double*, double*, int*, double*, int*, double*, double*, int*);
+/* reference_dgemm wraps a call to the BLAS-3 routine DGEMM, via the CBLAS dgemm interface - hence the reference semantics. */
 void reference_dgemm (int N, double ALPHA, double* A, double* B, double* C)
 {
     char TRANSA = 'N';
@@ -43,7 +41,7 @@ void reference_dgemm (int N, double ALPHA, double* A, double* B, double* C)
     int LDA = N;
     int LDB = N;
     int LDC = N;
-    DGEMM(&TRANSA, &TRANSB, &M, &N, &K, &ALPHA, A, &LDA, B, &LDB, &BETA, C, &LDC);
+    cblas_dgemm(&TRANSA, &TRANSB, &M, &N, &K, &ALPHA, A, &LDA, B, &LDB, &BETA, C, &LDC);
 }
 
 /* Your function must have the following signature: */
