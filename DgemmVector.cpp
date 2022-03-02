@@ -35,8 +35,6 @@ void DgemmVector::load_vectors(int vM, int n, const double *A, Vec4d *vA, Vec4d 
     /* Load the vector version of A by expanding the cyclic permutation of each chunk of VEC_SIZE adjacent elements of A */
     load_vA(vM, padN, n, vA, padA);
 
-    printf("\n");
-
     /* Initialize vC */
     load_vC(vM, n, vC);
 }
