@@ -5,6 +5,7 @@
 
 #include <cfloat>  // For: DBL_EPSILON
 #include <cmath>   // For: fabs
+#include "cblas.h"
 
 #include "dgemm_set.h"
 #include "DgemmVectorNonBlockedIJK.h"
@@ -30,7 +31,7 @@
 #define MAX_SPEED 35.1
 
 /* reference_dgemm wraps a call to the BLAS-3 routine DGEMM, via the standard FORTRAN interface - hence the reference semantics. */
-#define DGEMM dgemm_
+#define DGEMM cblas_dgemm
 extern void DGEMM (char*, char*, int*, int*, int*, double*, double*, int*, double*, int*, double*, double*, int*);
 void reference_dgemm (int N, double ALPHA, double* A, double* B, double* C)
 {
@@ -134,7 +135,7 @@ int test_sizes[] =
 /* The benchmarking program
  *
  * Warning: will use a lot of stack memory. Please make sure your stack limit is around 64MB or higher. */
-int main ()
+int main()
 {
     /* Different types of Dgemm objects */
     Dgemm* dgemms[] = {new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccJKI(),
