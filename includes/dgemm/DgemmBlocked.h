@@ -9,7 +9,7 @@
 #include "dgemm_utils.h"
 
 #ifndef BLOCK_SIZE
-#define BLOCK_SIZE 32
+#define BLOCK_SIZE 73
 #endif
 
 void do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C);
