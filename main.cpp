@@ -21,8 +21,8 @@
 #define MAX_SPEED 59.2
 
 /* Link to each implementation of this in separate builds */
-extern const char* dgemm_desc();
-extern void square_dgemm (int, const double*, const double*, double*);
+const char* dgemm_desc();
+void square_dgemm (int, const double*, const double*, double*);
 
 /* reference_dgemm wraps a call to the BLAS-3 routine DGEMM, via the CBLAS dgemm interface - hence the reference semantics. */
 void reference_dgemm (int N, double ALPHA, double* A, double* B, double* C)
