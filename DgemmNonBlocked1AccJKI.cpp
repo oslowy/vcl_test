@@ -8,7 +8,7 @@
  *  C := C + A * B
  * where A, B, and C are lda-by-lda matrices stored in column-major format.
  * On exit, A and B maintain their input values. */
-void DgemmNonBlocked1AccJKI::square_dgemm(int n, const double *A, const double *B, double *C)
+void square_dgemm(int n, const double *A, const double *B, double *C)
 {
     for (int j = 0; j < n; ++j)
         for (int k = 0; k < n; ++k)
@@ -22,6 +22,6 @@ void DgemmNonBlocked1AccJKI::square_dgemm(int n, const double *A, const double *
         }
 }
 
-const char *DgemmNonBlocked1AccJKI::dgemm_desc() {
+const char *dgemm_desc() {
     return "Non-blocked DGEMM with j-k-i loop order and one accumulator";
 }

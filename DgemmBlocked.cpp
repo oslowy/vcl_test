@@ -5,7 +5,7 @@
 #include "DgemmBlocked.h"
 #include "dgemm_utils.h"
 
-void DgemmBlocked::square_dgemm(int lda, const double *A, const double *B, double *C) {
+void square_dgemm(int lda, const double *A, const double *B, double *C) {
     /* For each block-row of A */
     for (int i = 0; i < lda; i += BLOCK_SIZE)
         /* For each block-column of B */

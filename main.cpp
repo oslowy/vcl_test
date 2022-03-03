@@ -7,17 +7,6 @@
 #include <cmath>   // For: fabs
 #include <cblas.h> // For: cblas_dgemm
 
-#include "dgemm_set.h"
-#include "DgemmVectorNonBlockedIJK.h"
-#include "DgemmVectorNonBlockedJKI.h"
-#include "DgemmVectorBlockedIJK.h"
-#include "DgemmVectorBlockedJKI.h"
-#include "DgemmNonBlocked4AccIJK.h"
-#include "DgemmNonBlocked4AccJKI.h"
-#include "DgemmBlocked4AccIJK.h"
-#include "DgemmBlocked4AccJKI.h"
-#include "DgemmReference.h"
-
 #ifdef GETTIMEOFDAY
 #include <sys/time.h> // For struct timeval, gettimeofday
 #else
@@ -30,6 +19,10 @@
  * TODO this updated value should be checked against the BLAS benchmark
  */
 #define MAX_SPEED 59.2
+
+/* Link to each implementation of this in separate builds */
+extern const char* dgemm_desc;
+extern void square_dgemm (int, const double*, const double*, double*);
 
 /* reference_dgemm wraps a call to the BLAS-3 routine DGEMM, via the CBLAS dgemm interface - hence the reference semantics. */
 void reference_dgemm (int N, double ALPHA, double* A, double* B, double* C)
@@ -75,19 +68,19 @@ void absolute_value (double *p, int n)
         p[i] = fabs (p[i]);
 }
 
-double run(Dgemm* dgemm, int n, const double* A, const double* B, double* C) {
+double run(int n, const double *A, const double *B, double *C) {
     /* Time a "sufficiently long" sequence of calls to reduce noise */
     double Gflops_s, seconds = -1.0;
     double timeout = 0.1; // "sufficiently long" := at least 1/10 second.
     for (int n_iterations = 1; seconds < timeout; n_iterations *= 2)
     {
         /* Warm-up */
-        dgemm->square_dgemm (n, A, B, C);
+        square_dgemm (n, A, B, C);
 
         /* Benchmark n_iterations runs of square_dgemm */
         seconds = -wall_time();
         for (int it = 0; it < n_iterations; ++it)
-            dgemm->square_dgemm (n, A, B, C);
+            square_dgemm (n, A, B, C);
         seconds += wall_time();
 
         /*  compute Gflop/s rate */
@@ -100,7 +93,7 @@ double run(Dgemm* dgemm, int n, const double* A, const double* B, double* C) {
 void check(Dgemm* dgemm, int n, double* A, double* B, double* C) {
         /* C := A * B, computed with square_dgemm */
         memset (C, 0, n * n * sizeof(double));
-        dgemm->square_dgemm(n, A, B, C);
+        square_dgemm(n, A, B, C);
 
         /* Do not explicitly check that A and B were unmodified on square_dgemm exit
          *  - if they were, the following will most likely detect it:
@@ -177,7 +170,7 @@ int main()
             fill (C, n*n);
 
             /* Measure performance (in Gflops/s). */
-            double Gflops_s = run(dgemm, n, A, B, C);
+            double Gflops_s = run(n, A, B, C);
 
             /* Storing Mflop rate and calculating percentage of peak */
             Mflops_s[isize] = Gflops_s*1000;

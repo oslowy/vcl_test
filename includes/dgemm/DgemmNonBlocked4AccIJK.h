@@ -6,13 +6,7 @@
 #define VCL_TEST_DGEMMNONBLOCKED4ACCIJK_H
 
 
-#include "DgemmNonBlocked.h"
-
-class DgemmNonBlocked4AccIJK: public DgemmNonBlocked {
-public:
-    void square_dgemm (int n, const double* A, const double* B, double* C) override;
-    const char* dgemm_desc() override;
-};
+#include "Dgemm.h"
 
 
 #endif //VCL_TEST_DGEMMNONBLOCKED4ACCIJK_H

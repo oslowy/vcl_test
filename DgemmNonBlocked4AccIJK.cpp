@@ -4,7 +4,7 @@
 
 #include "DgemmNonBlocked4AccIJK.h"
 
-void DgemmNonBlocked4AccIJK::square_dgemm(int n, const double *A, const double *B, double *C) {
+void square_dgemm(int n, const double *A, const double *B, double *C) {
     const int FOUR_ACC_LIMIT = n - 3; //Stop accumulating with four accumulators early so does not go out of bounds
 
     /* For each row i of A */
@@ -37,6 +37,6 @@ void DgemmNonBlocked4AccIJK::square_dgemm(int n, const double *A, const double *
         }
 }
 
-const char *DgemmNonBlocked4AccIJK::dgemm_desc() {
+const char *dgemm_desc() {
     return "Non-blocked DGEMM with i-j-k loop order and four accumulators";
 }

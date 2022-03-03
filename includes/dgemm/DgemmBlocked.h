@@ -7,13 +7,10 @@
 
 #include "Dgemm.h"
 
-class DgemmBlocked : public Dgemm {
-public:
-    const int BLOCK_SIZE = 32;
+#ifndef BLOCK_SIZE
+#define BLOCK_SIZE 32
+#endif
 
-protected:
-    void square_dgemm (int n, const double* A, const double* B, double* C) override;
-    virtual void do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C) = 0;
-};
+void do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C);
 
 #endif //VCL_TEST_DGEMMBLOCKED_H

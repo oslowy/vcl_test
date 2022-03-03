@@ -4,11 +4,11 @@
 
 #include "DgemmBlocked4AccJKI.h"
 
-const char *DgemmBlocked4AccJKI::dgemm_desc() {
+const char *dgemm_desc() {
     return "Blocked DGEMM with 4 accumulators and j-k-i loop order inside block";
 }
 
-void DgemmBlocked4AccJKI::do_block(int lda, int M, int N, int K, const double *A, const double *B, double *C) {
+void do_block(int lda, int M, int N, int K, const double *A, const double *B, double *C) {
     const int FOUR_ACC_LIMIT = K - 3; //Stop accumulating with four accumulators early so does not go out of bounds
 
     for ( int j = 0; j < N; j++ )

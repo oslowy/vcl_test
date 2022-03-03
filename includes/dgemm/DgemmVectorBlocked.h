@@ -8,14 +8,10 @@
 
 #include "DgemmVector.h"
 
-class DgemmVectorBlocked: public DgemmVector {
-public:
-    static const int BLOCK_SIZE = 8;
+#ifndef VEC_BLOCK_SIZE
+#define VEC_BLOCK_SIZE 8
+#endif
 
-protected:
-    void vector_dgemm(int vM, int n, const Vec4d *vA, const double *B, Vec4d *vC) override;
-    virtual void do_block(int vM, int n, int M, int N, int K, const Vec4d *vA, const double *B, Vec4d *vC) = 0;
-};
-
+void do_block(int vM, int n, int M, int N, int K, const Vec4d *vA, const double *B, Vec4d *vC);
 
 #endif //VCL_TEST_DGEMMVECTORBLOCKED_H

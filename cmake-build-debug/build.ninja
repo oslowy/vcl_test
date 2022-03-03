@@ -161,12 +161,12 @@ build CMakeFiles/vcl_test.dir/DgemmBlocked4AccJKI.cpp.obj: CXX_COMPILER__vcl_tes
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
-build CMakeFiles/vcl_test.dir/includes/dgemm/DgemmReference.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm/DgemmReference.cpp || cmake_object_order_depends_target_vcl_test
-  DEP_FILE = CMakeFiles\vcl_test.dir\includes\dgemm\DgemmReference.cpp.obj.d
+build CMakeFiles/vcl_test.dir/DgemmReference.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmReference.cpp || cmake_object_order_depends_target_vcl_test
+  DEP_FILE = CMakeFiles\vcl_test.dir\DgemmReference.cpp.obj.d
   FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
-  OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir\includes\dgemm
+  OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
 
 # =============================================================================
@@ -176,7 +176,7 @@ build CMakeFiles/vcl_test.dir/includes/dgemm/DgemmReference.cpp.obj: CXX_COMPILE
 #############################################
 # Link the executable vcl_test.exe
 
-build vcl_test.exe: CXX_EXECUTABLE_LINKER__vcl_test_Debug CMakeFiles/vcl_test.dir/main.cpp.obj CMakeFiles/vcl_test.dir/DgemmVector.cpp.obj CMakeFiles/vcl_test.dir/DgemmNonBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmNonBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorBlocked.cpp.obj CMakeFiles/vcl_test.dir/DgemmBlocked.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlockedIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlockedJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorBlockedIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorBlockedJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmNonBlocked4AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmNonBlocked4AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmBlocked4AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmBlocked4AccJKI.cpp.obj CMakeFiles/vcl_test.dir/includes/dgemm/DgemmReference.cpp.obj
+build vcl_test.exe: CXX_EXECUTABLE_LINKER__vcl_test_Debug CMakeFiles/vcl_test.dir/main.cpp.obj CMakeFiles/vcl_test.dir/DgemmVector.cpp.obj CMakeFiles/vcl_test.dir/DgemmNonBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmNonBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorBlocked.cpp.obj CMakeFiles/vcl_test.dir/DgemmBlocked.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlockedIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlockedJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorBlockedIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorBlockedJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmNonBlocked4AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmNonBlocked4AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmBlocked4AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmBlocked4AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmReference.cpp.obj
   FLAGS = -g
   LINK_FLAGS = -Wl,--stack,40000000
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32

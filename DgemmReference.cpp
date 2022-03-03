@@ -5,7 +5,7 @@
 #include "DgemmReference.h"
 #include <cblas.h> // For: cblas_dgemm
 
-void DgemmReference::square_dgemm(int n, const double *A, const double *B, double *C) {
+void square_dgemm(int n, const double *A, const double *B, double *C) {
     int M = n;
     int N = n;
     int K = n;
@@ -17,6 +17,6 @@ void DgemmReference::square_dgemm(int n, const double *A, const double *B, doubl
     cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, M, N, K, ALPHA, A, LDA, B, LDB, BETA, C, LDC);
 }
 
-const char *DgemmReference::dgemm_desc() {
+const char *dgemm_desc() {
     return "Reference to default DGEMM for comparison";
 }

@@ -7,7 +7,7 @@
 /* This auxiliary subroutine performs a smaller dgemm operation
  *  C := C + A * B
  * where C is M-by-N, A is M-by-K, and B is K-by-N. */
-void DgemmBlocked1AccJKI::do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C)
+void do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C)
 {
     for ( int j = 0; j < N; j++ )
         for (int k = 0; k < K; ++k)
@@ -21,6 +21,6 @@ void DgemmBlocked1AccJKI::do_block (int lda, int M, int N, int K, const double* 
         }
 }
 
-const char *DgemmBlocked1AccJKI::dgemm_desc() {
+const char *dgemm_desc() {
     return "Blocked DGEMM with 1 accumulator and j-k-i loop order inside block";
 }

@@ -4,7 +4,7 @@
 
 #include "DgemmVectorNonBlockedIJK.h"
 
-void DgemmVectorNonBlockedIJK::vector_dgemm(int vM, int n, const Vec4d *vA, const double *B, Vec4d *vC) {
+void vector_dgemm(int vM, int n, const Vec4d *vA, const double *B, Vec4d *vC) {
     /* For each row i of vA */
     for (int i = 0; i < vM; ++i)
         /* For each column j of B */
@@ -18,6 +18,6 @@ void DgemmVectorNonBlockedIJK::vector_dgemm(int vM, int n, const Vec4d *vA, cons
         }
 }
 
-const char *DgemmVectorNonBlockedIJK::dgemm_desc() {
+const char *dgemm_desc() {
     return "Non-blocked Vectorized DGEMM with i-j-k loop order";
 }

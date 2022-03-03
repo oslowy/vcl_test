@@ -2,11 +2,10 @@
 // Created by Orion on 2/22/2022.
 //
 
-#include <cstdio>
 #include "DgemmVector.h"
 #include "dgemm_utils.h"
 
-void DgemmVector::square_dgemm(int n, const double *A, const double *B, double *C) {
+void square_dgemm(int n, const double *A, const double *B, double *C) {
     /* Load data into vectors */
     int vM = n / VEC_SIZE + (n % VEC_SIZE == 0 ? 0 : 1); //Round up to a multiple of VEC_SIZE
     Vec4d vA[vM * n], vC[vM * n];
@@ -22,7 +21,7 @@ void DgemmVector::square_dgemm(int n, const double *A, const double *B, double *
     store_vectors(vM, n, C, vC);
 }
 
-void DgemmVector::load_vectors(int vM, int n, const double *A, Vec4d *vA, Vec4d *vC) {
+void load_vectors(int vM, int n, const double *A, Vec4d *vA, Vec4d *vC) {
     /* Pad the scalar array with zeros if its size is not a multiple of the vector size */
     int padN = vM * VEC_SIZE;
     double padA[padN * n];
@@ -39,7 +38,7 @@ void DgemmVector::load_vectors(int vM, int n, const double *A, Vec4d *vA, Vec4d 
     load_vC(vM, n, vC);
 }
 
-void DgemmVector::pad_scalar_mat(int padN, int n, double *padA, const double *A) {
+void pad_scalar_mat(int padN, int n, double *padA, const double *A) {
     /* Copy existing data */
     for(int i=0; i < n; i++)
         for(int j=0; j < n; j++)
@@ -55,7 +54,7 @@ void DgemmVector::pad_scalar_mat(int padN, int n, double *padA, const double *A)
     }
 }
 
-void DgemmVector::load_vA(int vM, int padN, int n, Vec4d *vA, double *padA) {
+void load_vA(int vM, int padN, int n, Vec4d *vA, double *padA) {
     for(int i=0; i < vM; i++) //Row of vA
         for(int j=0; j < n; j++) //Column of vA (incremented by block of VEC_SIZE)
         {
@@ -63,13 +62,13 @@ void DgemmVector::load_vA(int vM, int padN, int n, Vec4d *vA, double *padA) {
         }
 }
 
-void DgemmVector::load_vC(int vM, int n, Vec4d *vC) {
+void load_vC(int vM, int n, Vec4d *vC) {
     for(int i=0; i<vM; i++)
         for(int j=0; j < n; j++)
             vC[i + j * vM] = 0.0;
 }
 
-void DgemmVector::store_vectors(int vM, int n, double *C, const Vec4d *vC) {
+void store_vectors(int vM, int n, double *C, const Vec4d *vC) {
     int padN = vM * VEC_SIZE;
     double padC[padN * n];
 
