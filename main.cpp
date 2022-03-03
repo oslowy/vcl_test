@@ -21,7 +21,7 @@
 #define MAX_SPEED 59.2
 
 /* Link to each implementation of this in separate builds */
-extern const char* dgemm_desc;
+extern const char* dgemm_desc();
 extern void square_dgemm (int, const double*, const double*, double*);
 
 /* reference_dgemm wraps a call to the BLAS-3 routine DGEMM, via the CBLAS dgemm interface - hence the reference semantics. */
@@ -90,7 +90,7 @@ double run(int n, const double *A, const double *B, double *C) {
     return Gflops_s;
 }
 
-void check(Dgemm* dgemm, int n, double* A, double* B, double* C) {
+void check(int n, double *A, double *B, double *C) {
         /* C := A * B, computed with square_dgemm */
         memset (C, 0, n * n * sizeof(double));
         square_dgemm(n, A, B, C);
@@ -127,15 +127,6 @@ int test_sizes[] =
  * Warning: will use a lot of stack memory. Please make sure your stack limit is around 64MB or higher. */
 int main()
 {
-    /* Different types of Dgemm objects */
-    Dgemm* dgemms[] = {new DgemmReference(),
-                       new DgemmNonBlocked1AccIJK(), new DgemmNonBlocked1AccJKI(),
-                       new DgemmNonBlocked4AccIJK(), new DgemmNonBlocked4AccJKI(),
-                       new DgemmBlocked1AccIJK(), new DgemmBlocked1AccJKI(),
-                       new DgemmBlocked4AccIJK(), new DgemmBlocked4AccJKI(),
-                       new DgemmVectorNonBlockedIJK(), new DgemmVectorNonBlockedJKI(),
-                       new DgemmVectorBlockedIJK(), new DgemmVectorBlockedJKI()};
-
     /* Test sizes should highlight performance dips at multiples of certain powers-of-two */
     int nsizes = sizeof(test_sizes)/sizeof(test_sizes[0]);
 
@@ -144,57 +135,52 @@ int main()
 
     double Mflops_s[nsizes],per[nsizes],aveper;
 
-    /* For each dgemm type */
-    for(auto dgemm : dgemms)
+    /* Select dgemm type and print description */
+    printf("%s\n", dgemm_desc());
+
+    /* allocate memory for all problems */
+    double* buf = nullptr;
+    buf = (double*) malloc (3 * nmax * nmax * sizeof(double));
+    if (buf == nullptr) die ("failed to allocate largest problem size");
+
+    /* For each test size */
+    for (int isize = 0; isize < sizeof(test_sizes)/sizeof(test_sizes[0]); ++isize)
     {
-        /* Select dgemm type and print description */
-        printf("%s\n", dgemm->dgemm_desc());
+        /* Create and fill 3 random matrices A,B,C*/
+        int n = test_sizes[isize];
 
-        /* allocate memory for all problems */
-        double* buf = nullptr;
-        buf = (double*) malloc (3 * nmax * nmax * sizeof(double));
-        if (buf == nullptr) die ("failed to allocate largest problem size");
+        double* A = buf + 0;
+        double* B = A + nmax*nmax;
+        double* C = B + nmax*nmax;
 
-        /* For each test size */
-        for (int isize = 0; isize < sizeof(test_sizes)/sizeof(test_sizes[0]); ++isize)
-        {
-            /* Create and fill 3 random matrices A,B,C*/
-            int n = test_sizes[isize];
+        fill (A, n*n);
+        fill (B, n*n);
+        fill (C, n*n);
 
-            double* A = buf + 0;
-            double* B = A + nmax*nmax;
-            double* C = B + nmax*nmax;
+        /* Measure performance (in Gflops/s). */
+        double Gflops_s = run(n, A, B, C);
 
-            fill (A, n*n);
-            fill (B, n*n);
-            fill (C, n*n);
+        /* Storing Mflop rate and calculating percentage of peak */
+        Mflops_s[isize] = Gflops_s*1000;
+        per[isize] = Gflops_s*100/MAX_SPEED;
 
-            /* Measure performance (in Gflops/s). */
-            double Gflops_s = run(n, A, B, C);
+        printf ("Size: %d\tMflop/s: %8g\tPercentage:%6.2lf\n", n, Mflops_s[isize],per[isize]);
 
-            /* Storing Mflop rate and calculating percentage of peak */
-            Mflops_s[isize] = Gflops_s*1000;
-            per[isize] = Gflops_s*100/MAX_SPEED;
-
-            printf ("Size: %d\tMflop/s: %8g\tPercentage:%6.2lf\n", n, Mflops_s[isize],per[isize]);
-
-            /* Ensure that error does not exceed the theoretical error bound. */
-            check(dgemm, n, A, B, C);
-        }
-
-        /* Calculating average percentage of peak reached by algorithm */
-        aveper=0;
-        for (int i=0; i<nsizes;i++)
-            aveper+= per[i];
-        aveper/=nsizes*1.0;
-
-        /* Printing average percentage to screen */
-        printf("Average percentage of Peak = %g\n",aveper);
-
-        /* Free memory used by the dgemm object to save room for the next one */
-        delete dgemm;
-        free (buf);
+        /* Ensure that error does not exceed the theoretical error bound. */
+        check(n, A, B, C);
     }
+
+    /* Calculating average percentage of peak reached by algorithm */
+    aveper=0;
+    for (int i=0; i<nsizes;i++)
+        aveper+= per[i];
+    aveper/=nsizes*1.0;
+
+    /* Printing average percentage to screen */
+    printf("Average percentage of Peak = %g\n",aveper);
+
+    /* Free memory used by the dgemm object to save room for the next one */
+    free (buf);
 
     return 0;
 }
