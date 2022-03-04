@@ -9,4 +9,9 @@
 #include "DgemmVector.h"
 #include "DgemmBlocked.h"
 
+#ifdef BLOCK_SIZE
+#undef BLOCK_SIZE
+#define BLOCK_SIZE 18 //For vectors
+#endif
+
 #endif //VCL_TEST_DGEMMVECTORBLOCKED_H
