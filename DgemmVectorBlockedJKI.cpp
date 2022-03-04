@@ -23,10 +23,13 @@ void do_block (int n, int M, int N, int K, const double* A, const double* B, dou
             int i;
             /* Use full load/store for the largest vector-multiple subset of the matrix */
             for(i = 0; i < cutM; i += VEC_SIZE)
-                (Vec4d().load(A + i + k * n) * bkj).store(C + i + j * n);
+                (Vec4d().load(C + i + j * n) + Vec4d().load(A + i + k * n) * bkj)
+                        .store(C + i + j * n);
 
             /* Use partial load/store on the rest of the matrix */
-            (Vec4d().load_partial(Mremainder, A + i + k * n) * bkj)
+            (Vec4d().load_partial(Mremainder,C + i + j * n)
+                    + Vec4d().load_partial(Mremainder, A + i + k * n)
+                    * bkj)
                 .store_partial(Mremainder, C + i + j * n);
         }
 }
