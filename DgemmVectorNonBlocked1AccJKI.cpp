@@ -34,5 +34,5 @@ void square_dgemm(const int n, const double *A, const double *B, double *C)
 }
 
 const char *dgemm_desc() {
-    return "Non-blocked Vectorized DGEMM with j-k-i loop order";
+    return "Non-blocked Vectorized DGEMM with 1 accumulator and j-k-i loop order";
 }
