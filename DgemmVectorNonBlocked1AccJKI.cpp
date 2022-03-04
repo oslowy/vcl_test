@@ -4,19 +4,6 @@
 
 #include "DgemmVectorNonBlocked1AccJKI.h"
 
-void vector_dgemm(int vM, int n, const Vec4d *vA, const double *B, Vec4d *vC) {
-    for (int j = 0; j < n; j++ )
-        for (int k = 0; k < n; ++k)
-        {
-            /* Pre-store vA[i][k] to avoid repeated memory access */
-            double bkj = B[k+j*n];
-
-            /* Compute next partial sum of vC(i,j) */
-            for(int i = 0; i < vM; ++i)
-                vC[i+j*vM] += vA[i+k*vM] * bkj;
-        }
-}
-
 void square_dgemm(int n, const double *A, const double *B, double *C)
 {
     const int cutN = n & (-VEC_SIZE); //Round down to multiple of 4

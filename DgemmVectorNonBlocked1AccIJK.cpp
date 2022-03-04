@@ -4,20 +4,6 @@
 
 #include "DgemmVectorNonBlocked1AccIJK.h"
 
-void vector_dgemm(int vM, int n, const Vec4d *vA, const double *B, Vec4d *vC) {
-    /* For each row i of vA */
-    for (int i = 0; i < vM; ++i)
-        /* For each column j of B */
-        for (int j = 0; j < n; ++j)
-        {
-            /* Compute vC(i,j) */
-            Vec4d cij = 0.0;
-            for( int k = 0; k < n; k++ )
-                cij += vA[i+k*vM] * B[k+j*n]; //Uniformly multiply vector A by scalar B
-            vC[i+j*vM] = cij;
-        }
-}
-
 /*
  * Based on example 9.12 from Agner Fog's VCL manual
  * */
@@ -48,5 +34,5 @@ void square_dgemm(int n, const double *A, const double *B, double *C)
 }
 
 const char *dgemm_desc() {
-    return "Non-blocked Vectorized DGEMM with i-j-k loop order";
+    return "Non-blocked Vectorized DGEMM with 1 accumulator and i-j-k loop order";
 }
