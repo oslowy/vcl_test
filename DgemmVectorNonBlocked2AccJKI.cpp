@@ -28,15 +28,15 @@ void square_dgemm(const int n, const double *A, const double *B, double *C)
             /* Use full load/store for the largest vector-multiple subset of the matrix */
             for(i = 0; i < cutN; i += VEC_SIZE)
                 (Vec4d().load(C + i + j * n) +
-                    (Vec4d().load(A + i + k * n) * bk0j
-                        + Vec4d().load(A + i + k + 1 * n) * bk1j))
+                    (Vec4d().load(A + i + (k) * n) * bk0j
+                        + Vec4d().load(A + i + (k + 1) * n) * bk1j))
                     .store(C + i + j * n);
 
             /* Use partial load/store on the rest of the matrix */
             if(i < n)
                 (Vec4d().load_partial(remainder,C + i + j * n) +
-                    (Vec4d().load_partial(remainder, A + i + k * n) * bk0j
-                        + Vec4d().load_partial(remainder, A + i + k + 1 * n) * bk1j))
+                    (Vec4d().load_partial(remainder, A + i + (k) * n) * bk0j
+                        + Vec4d().load_partial(remainder, A + i + (k + 1) * n) * bk1j))
                     .store_partial(remainder, C + i + j * n);
         }
 
