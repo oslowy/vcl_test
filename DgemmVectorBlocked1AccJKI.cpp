@@ -27,7 +27,7 @@ void do_block (const int n, const int M, const int N, const int K, const double*
                         .store(C + i + j * n);
 
             /* Use partial load/store on the rest of the matrix */
-            if(i < M - 1)
+            if(i < M)
                 (Vec4d().load_partial(Mremainder,C + i + j * n)
                         + Vec4d().load_partial(Mremainder, A + i + k * n)
                         * bkj)

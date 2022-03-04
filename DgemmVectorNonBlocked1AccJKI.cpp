@@ -23,7 +23,7 @@ void square_dgemm(const int n, const double *A, const double *B, double *C)
                     .store(C + i + j * n);
 
             /* Use partial load/store on the rest of the matrix */
-            if(i < n - 1)
+            if(i < n)
                 (Vec4d().load_partial(remainder,C + i + j * n)
                         + Vec4d().load_partial(remainder, A + i + k * n)
                         * bkj)

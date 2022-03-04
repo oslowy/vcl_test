@@ -25,7 +25,7 @@ void do_block (const int n, const int M, const int N, const int K, const double*
         }
 
     /* Use partial load/store on the rest of the matrix */
-    if(i < M - 1)
+    if(i < M)
         for (int j=0; j < N; j++)
         {
             Vec4d cij = Vec4d().load_partial(Mremainder, C + i + j * n);

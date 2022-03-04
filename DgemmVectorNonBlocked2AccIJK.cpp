@@ -39,7 +39,7 @@ void square_dgemm(const int n, const double *A, const double *B, double *C)
         }
 
     /* Use partial load/store on the rest of the matrix */
-    if(i < n - 1)
+    if(i < n)
         for (int j=0; j < n; j++)
         {
             Vec4d acc0(0.0);
