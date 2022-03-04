@@ -2,7 +2,7 @@
 // Created by Orion on 2/28/2022.
 //
 
-#include "DgemmVectorNonBlockedJKI.h"
+#include "DgemmVectorNonBlocked1AccJKI.h"
 
 void vector_dgemm(int vM, int n, const Vec4d *vA, const double *B, Vec4d *vC) {
     for (int j = 0; j < n; j++ )

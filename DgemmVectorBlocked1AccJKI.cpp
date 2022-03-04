@@ -2,7 +2,7 @@
 // Created by Orion on 2/28/2022.
 //
 
-#include "DgemmVectorBlockedJKI.h"
+#include "DgemmVectorBlocked1AccJKI.h"
 
 const char *dgemm_desc() {
     return "Blocked Vectorized dgemm with j-k-i loop order within block";

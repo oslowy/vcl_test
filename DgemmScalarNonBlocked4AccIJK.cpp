@@ -2,7 +2,7 @@
 // Created by Orion on 2/28/2022.
 //
 
-#include "DgemmNonBlocked4AccIJK.h"
+#include "DgemmScalarNonBlocked4AccIJK.h"
 
 void square_dgemm(int n, const double *A, const double *B, double *C) {
     const int FOUR_ACC_LIMIT = n - 3; //Stop accumulating with four accumulators early so does not go out of bounds

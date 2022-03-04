@@ -2,7 +2,7 @@
 // Created by Serendipity_2 on 2/24/2022.
 //
 
-#include "DgemmNonBlocked1AccJKI.h"
+#include "DgemmScalarNonBlocked1AccJKI.h"
 
 /* This routine performs a dgemm operation
  *  C := C + A * B

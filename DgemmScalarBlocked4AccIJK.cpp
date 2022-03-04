@@ -2,7 +2,7 @@
 // Created by Orion on 2/28/2022.
 //
 
-#include "DgemmBlocked4AccIJK.h"
+#include "DgemmScalarBlocked4AccIJK.h"
 
 const char *dgemm_desc() {
     return "Blocked DGEMM with 4 accumulators and i-j-k loop order inside block";
