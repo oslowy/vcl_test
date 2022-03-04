@@ -7,9 +7,9 @@
 void square_dgemm(const int n, const double *A, const double *B, double *C) {
     const int FOUR_ACC_LIMIT = n - 3; //Stop accumulating with four accumulators early so does not go out of bounds
 
-    /* Compute the partial sum for four accumulators */
     for (int j = 0; j < n; ++j)
     {
+        /* Compute the partial sum for four accumulators */
         int k;
         for (k = 0; k < FOUR_ACC_LIMIT; k += 4)
         {
@@ -20,13 +20,12 @@ void square_dgemm(const int n, const double *A, const double *B, double *C) {
             double bk3j = B[k+3+j*n];
 
             /* Compute next partial sum on C(i,j) */
-            for( int i = 0; i < n; i++ )
-            {
-                C[i+j*n] += A[i+(k)*n] * bk0j;
-                C[i+j*n] += A[i+(k+1)*n] * bk1j;
-                C[i+j*n] += A[i+(k+2)*n] * bk2j;
-                C[i+j*n] += A[i+(k+3)*n] * bk3j;
-            }
+            for( int i = 0; i < n; i++ )    // Use an expression to reduce load/store dependency chaining
+                C[i+j*n] +=
+                        (A[i+(k)*n] * bk0j
+                         + A[i+(k+1)*n] * bk1j) +
+                        (A[i+(k+2)*n] * bk2j
+                         + A[i+(k+3)*n] * bk3j);
         }
 
         /* Finish remaining elements not covered by the four accumulators using one accumulator */

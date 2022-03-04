@@ -147,8 +147,15 @@ build CMakeFiles/vcl_test.dir/DgemmReference.cpp.obj: CXX_COMPILER__vcl_test_Deb
   OBJECT_DIR = CMakeFiles\vcl_test.dir
   OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
 
-build CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked4AccIJK.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmVectorNonBlocked4AccIJK.cpp || cmake_object_order_depends_target_vcl_test
-  DEP_FILE = CMakeFiles\vcl_test.dir\DgemmVectorNonBlocked4AccIJK.cpp.obj.d
+build CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked2AccIJK.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmVectorNonBlocked2AccIJK.cpp || cmake_object_order_depends_target_vcl_test
+  DEP_FILE = CMakeFiles\vcl_test.dir\DgemmVectorNonBlocked2AccIJK.cpp.obj.d
+  FLAGS = -g -O2 -march=native -std=gnu++17
+  INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
+  OBJECT_DIR = CMakeFiles\vcl_test.dir
+  OBJECT_FILE_DIR = CMakeFiles\vcl_test.dir
+
+build CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked2AccJKI.cpp.obj: CXX_COMPILER__vcl_test_Debug C$:/Users/OSLow/CLionProjects/vcl-test/DgemmVectorNonBlocked2AccJKI.cpp || cmake_object_order_depends_target_vcl_test
+  DEP_FILE = CMakeFiles\vcl_test.dir\DgemmVectorNonBlocked2AccJKI.cpp.obj.d
   FLAGS = -g -O2 -march=native -std=gnu++17
   INCLUDES = -IC:/Users/OSLow/CLionProjects/vcl-test/includes/dgemm -IC:/Users/OSLow/CLionProjects/vcl-test/includes/vcl
   OBJECT_DIR = CMakeFiles\vcl_test.dir
@@ -162,7 +169,7 @@ build CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked4AccIJK.cpp.obj: CXX_COMPILER
 #############################################
 # Link the executable vcl_test.exe
 
-build vcl_test.exe: CXX_EXECUTABLE_LINKER__vcl_test_Debug CMakeFiles/vcl_test.dir/main.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarNonBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarNonBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarNonBlocked4AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarNonBlocked4AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarBlocked4AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarBlocked4AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmReference.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked4AccIJK.cpp.obj
+build vcl_test.exe: CXX_EXECUTABLE_LINKER__vcl_test_Debug CMakeFiles/vcl_test.dir/main.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarNonBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarNonBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorBlocked1AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorBlocked1AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarNonBlocked4AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarNonBlocked4AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarBlocked4AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmScalarBlocked4AccJKI.cpp.obj CMakeFiles/vcl_test.dir/DgemmReference.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked2AccIJK.cpp.obj CMakeFiles/vcl_test.dir/DgemmVectorNonBlocked2AccJKI.cpp.obj
   FLAGS = -g
   LINK_FLAGS = -Wl,--stack,40000000
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32

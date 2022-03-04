@@ -23,14 +23,12 @@ void do_block(const int n, const int M, const int N, const int K, const double *
             double bk3j = B[k+3+ j * n];
 
             /* Compute next partial sum on C(i,j) */
-            for(int i = 0; i < M; ++i)
-            {
-                C[i+ j * n] += A[i + (k) * n] * bk0j;
-                C[i+ j * n] += A[i + (k + 1) * n] * bk1j;
-                C[i+ j * n] += A[i + (k + 2) * n] * bk2j;
-                C[i+ j * n] += A[i + (k + 3) * n] * bk3j;
-            }
-
+            for(int i = 0; i < M; ++i)  // Use an expression to reduce load/store dependency chaining
+                C[i+j*n] +=
+                        (A[i+(k)*n] * bk0j
+                         + A[i+(k+1)*n] * bk1j) +
+                        (A[i+(k+2)*n] * bk2j
+                         + A[i+(k+3)*n] * bk3j);
         }
 
         /* Finish remaining elements not covered by the four accumulators using one accumulator */
