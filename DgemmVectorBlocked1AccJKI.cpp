@@ -27,9 +27,10 @@ void do_block (int n, int M, int N, int K, const double* A, const double* B, dou
                         .store(C + i + j * n);
 
             /* Use partial load/store on the rest of the matrix */
-            (Vec4d().load_partial(Mremainder,C + i + j * n)
-                    + Vec4d().load_partial(Mremainder, A + i + k * n)
-                    * bkj)
-                .store_partial(Mremainder, C + i + j * n);
+            for(; i < M; i += VEC_SIZE)
+                (Vec4d().load_partial(Mremainder,C + i + j * n)
+                        + Vec4d().load_partial(Mremainder, A + i + k * n)
+                        * bkj)
+                    .store_partial(Mremainder, C + i + j * n);
         }
 }

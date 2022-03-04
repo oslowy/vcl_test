@@ -24,13 +24,14 @@ void square_dgemm(int n, const double *A, const double *B, double *C)
         }
 
     /* Use partial load/store on the rest of the matrix */
-    for (int j=0; j < n; j++)
-    {
-        Vec4d cij(0.0);
-        for (int k=0; k < n; k++)
-            cij += Vec4d().load_partial(remainder,A + i + k * n) * B[k + j * n];
-        cij.store_partial(remainder,C + i + j * n);
-    }
+    for(; i < n; i += VEC_SIZE)
+        for (int j=0; j < n; j++)
+        {
+            Vec4d cij(0.0);
+            for (int k=0; k < n; k++)
+                cij += Vec4d().load_partial(remainder,A + i + k * n) * B[k + j * n];
+            cij.store_partial(remainder,C + i + j * n);
+        }
 }
 
 const char *dgemm_desc() {

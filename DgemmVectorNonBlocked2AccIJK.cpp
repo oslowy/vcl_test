@@ -39,26 +39,27 @@ void square_dgemm(int n, const double *A, const double *B, double *C)
         }
 
     /* Use partial load/store on the rest of the matrix */
-    for (int j=0; j < n; j++)
-    {
-        Vec4d acc0(0.0);
-        Vec4d acc1(0.0);
-
-        /* Compute the partial sum for two accumulators*/
-        int k;
-        for (k=0; k < TWO_ACC_LIMIT; k += 2)
+    for(; i < n; i += VEC_SIZE)
+        for (int j=0; j < n; j++)
         {
-            acc0 += Vec4d().load_partial(remainder, A + i + (k) * n) * B[k + j * n];
-            acc1 += Vec4d().load_partial(remainder, A + i + (k + 1) * n) * B[k + 1 + j * n];
+            Vec4d acc0(0.0);
+            Vec4d acc1(0.0);
+
+            /* Compute the partial sum for two accumulators*/
+            int k;
+            for (k=0; k < TWO_ACC_LIMIT; k += 2)
+            {
+                acc0 += Vec4d().load_partial(remainder, A + i + (k) * n) * B[k + j * n];
+                acc1 += Vec4d().load_partial(remainder, A + i + (k + 1) * n) * B[k + 1 + j * n];
+            }
+
+            /* Finish remaining elements not covered by the two accumulators using one accumulator */
+            for(; k < n; k++)
+                acc0 += Vec4d().load_partial(remainder, A + i + k * n) * B[k + j * n];
+
+            /* Add the partial sums and store */
+            (acc0 + acc1).store_partial(remainder, C + i + j * n);
         }
-
-        /* Finish remaining elements not covered by the two accumulators using one accumulator */
-        for(; k < n; k++)
-            acc0 += Vec4d().load_partial(remainder, A + i + k * n) * B[k + j * n];
-
-        /* Add the partial sums and store */
-        (acc0 + acc1).store_partial(remainder, C + i + j * n);
-    }
 }
 
 const char *dgemm_desc() {

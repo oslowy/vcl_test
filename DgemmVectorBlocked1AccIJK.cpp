@@ -25,11 +25,12 @@ void do_block (int n, int M, int N, int K, const double* A, const double* B, dou
         }
 
     /* Use partial load/store on the rest of the matrix */
-    for (int j=0; j < N; j++)
-    {
-        Vec4d cij = Vec4d().load_partial(Mremainder, C + i + j * n);
-        for (int k=0; k < K; k++)
-            cij += Vec4d().load_partial(Mremainder,A + i + k * n) * B[k + j * n];
-        cij.store_partial(Mremainder,C + i + j * n);
-    }
+    for(; i < M; i += VEC_SIZE)
+        for (int j=0; j < N; j++)
+        {
+            Vec4d cij = Vec4d().load_partial(Mremainder, C + i + j * n);
+            for (int k=0; k < K; k++)
+                cij += Vec4d().load_partial(Mremainder,A + i + k * n) * B[k + j * n];
+            cij.store_partial(Mremainder,C + i + j * n);
+        }
 }
