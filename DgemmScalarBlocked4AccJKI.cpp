@@ -8,7 +8,7 @@ const char *dgemm_desc() {
     return "Blocked DGEMM with 4 accumulators and j-k-i loop order inside block";
 }
 
-void do_block(int lda, int M, int N, int K, const double *A, const double *B, double *C) {
+void do_block(const int n, const int M, const int N, const int K, const double *A, const double *B, double *C) {
     const int FOUR_ACC_LIMIT = K - 3; //Stop accumulating with four accumulators early so does not go out of bounds
 
     for ( int j = 0; j < N; j++ )
@@ -17,18 +17,18 @@ void do_block(int lda, int M, int N, int K, const double *A, const double *B, do
         for (k = 0; k < FOUR_ACC_LIMIT; k += 4)
         {
             /* Pre-store B(k, j) to avoid repeated memory access */
-            double bk0j = B[k+j*lda];
-            double bk1j = B[k+1+j*lda];
-            double bk2j = B[k+2+j*lda];
-            double bk3j = B[k+3+j*lda];
+            double bk0j = B[k+ j * n];
+            double bk1j = B[k+1+ j * n];
+            double bk2j = B[k+2+ j * n];
+            double bk3j = B[k+3+ j * n];
 
             /* Compute next partial sum on C(i,j) */
             for(int i = 0; i < M; ++i)
             {
-                C[i+j*lda] += A[i+(k)*lda] * bk0j;
-                C[i+j*lda] += A[i+(k+1)*lda] * bk1j;
-                C[i+j*lda] += A[i+(k+2)*lda] * bk2j;
-                C[i+j*lda] += A[i+(k+3)*lda] * bk3j;
+                C[i+ j * n] += A[i + (k) * n] * bk0j;
+                C[i+ j * n] += A[i + (k + 1) * n] * bk1j;
+                C[i+ j * n] += A[i + (k + 2) * n] * bk2j;
+                C[i+ j * n] += A[i + (k + 3) * n] * bk3j;
             }
 
         }
@@ -36,10 +36,10 @@ void do_block(int lda, int M, int N, int K, const double *A, const double *B, do
         /* Finish remaining elements not covered by the four accumulators using one accumulator */
         for(; k < K; ++k)
         {
-            double bkj = B[k+j*lda];
+            double bkj = B[k+ j * n];
 
             for( int i = 0; i < M; i++ )
-                C[i+j*lda] += A[i+k*lda] * bkj;
+                C[i+ j * n] += A[i + k * n] * bkj;
         }
     }
 

@@ -4,7 +4,7 @@
 
 #include "DgemmVectorNonBlocked1AccJKI.h"
 
-void square_dgemm(int n, const double *A, const double *B, double *C)
+void square_dgemm(const int n, const double *A, const double *B, double *C)
 {
     const int cutN = n & (-VEC_SIZE); //Round down to multiple of 4
     const int remainder = n - cutN;
@@ -23,7 +23,7 @@ void square_dgemm(int n, const double *A, const double *B, double *C)
                     .store(C + i + j * n);
 
             /* Use partial load/store on the rest of the matrix */
-            for(; i < n; i += VEC_SIZE)
+            if(i < n - 1)
                 (Vec4d().load_partial(remainder,C + i + j * n)
                         + Vec4d().load_partial(remainder, A + i + k * n)
                         * bkj)

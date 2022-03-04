@@ -12,24 +12,24 @@
 #define BLOCK_SIZE 36
 #endif
 
-void do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C);
+void do_block (int n, int M, int N, int K, const double* A, const double* B, double* C);
 
-void square_dgemm(int lda, const double *A, const double *B, double *C)
+void square_dgemm(const int n, const double *A, const double *B, double *C)
 {
     /* For each block-row of A */
-    for (int i = 0; i < lda; i += BLOCK_SIZE)
+    for (int i = 0; i < n; i += BLOCK_SIZE)
         /* For each block-column of B */
-        for (int j = 0; j < lda; j += BLOCK_SIZE)
+        for (int j = 0; j < n; j += BLOCK_SIZE)
             /* Accumulate block dgemms into block of C */
-            for (int k = 0; k < lda; k += BLOCK_SIZE)
+            for (int k = 0; k < n; k += BLOCK_SIZE)
             {
                 /* Correct block dimensions if block "goes off edge of" the matrix */
-                int M = min2 (BLOCK_SIZE, lda - i);
-                int N = min2 (BLOCK_SIZE, lda - j);
-                int K = min2 (BLOCK_SIZE, lda - k);
+                int M = min2 (BLOCK_SIZE, n - i);
+                int N = min2 (BLOCK_SIZE, n - j);
+                int K = min2 (BLOCK_SIZE, n - k);
 
                 /* Perform individual block dgemm */
-                do_block(lda, M, N, K, A + i + k*lda, B + k + j*lda, C + i + j*lda);
+                do_block(n, M, N, K, A + i + k * n, B + k + j * n, C + i + j * n);
             }
 }
 

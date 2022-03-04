@@ -22,7 +22,7 @@
 
 /* Link to each implementation of this in separate builds */
 const char* dgemm_desc();
-void square_dgemm (int, const double*, const double*, double*);
+void square_dgemm (int n, const double *A, const double *B, double *C);
 
 /* reference_dgemm wraps a call to the BLAS-3 routine DGEMM, via the CBLAS dgemm interface - hence the reference semantics. */
 void reference_dgemm (int N, double ALPHA, double* A, double* B, double* C)

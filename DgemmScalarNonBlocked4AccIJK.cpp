@@ -4,7 +4,7 @@
 
 #include "DgemmScalarNonBlocked4AccIJK.h"
 
-void square_dgemm(int n, const double *A, const double *B, double *C) {
+void square_dgemm(const int n, const double *A, const double *B, double *C) {
     const int FOUR_ACC_LIMIT = n - 3; //Stop accumulating with four accumulators early so does not go out of bounds
 
     /* For each row i of A */

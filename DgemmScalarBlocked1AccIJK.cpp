@@ -7,7 +7,7 @@
 /* This auxiliary subroutine performs a smaller dgemm operation
  *  C := C + A * B
  * where C is M-by-N, A is M-by-K, and B is K-by-N. */
-void do_block (int lda, int M, int N, int K, const double* A, const double* B, double* C)
+void do_block (const int n, const int M, const int N, const int K, const double* A, const double* B, double* C)
 {
     /* For each row i of A */
     for (int i = 0; i < M; ++i)
@@ -15,10 +15,10 @@ void do_block (int lda, int M, int N, int K, const double* A, const double* B, d
         for (int j = 0; j < N; ++j)
         {
             /* Compute C(i,j) */
-            double cij = C[i+j*lda]; //Need to retrieve here because each block is only a partial sum
+            double cij = C[i+ j * n]; //Need to retrieve here because each block is only a partial sum
             for (int k = 0; k < K; ++k)
-                cij += A[i+k*lda] * B[k+j*lda];
-            C[i+j*lda] = cij;
+                cij += A[i+ k * n] * B[k + j * n];
+            C[i+ j * n] = cij;
         }
 }
 

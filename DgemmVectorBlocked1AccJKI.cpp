@@ -8,7 +8,7 @@ const char *dgemm_desc() {
     return "Blocked Vectorized dgemm with j-k-i loop order within block";
 }
 
-void do_block (int n, int M, int N, int K, const double* A, const double* B, double* C)
+void do_block (const int n, const int M, const int N, const int K, const double* A, const double* B, double* C)
 {
     const int cutM = M & (-VEC_SIZE); //Round down to multiple of 4
     const int Mremainder = M - cutM;
@@ -27,7 +27,7 @@ void do_block (int n, int M, int N, int K, const double* A, const double* B, dou
                         .store(C + i + j * n);
 
             /* Use partial load/store on the rest of the matrix */
-            for(; i < M; i += VEC_SIZE)
+            if(i < M - 1)
                 (Vec4d().load_partial(Mremainder,C + i + j * n)
                         + Vec4d().load_partial(Mremainder, A + i + k * n)
                         * bkj)

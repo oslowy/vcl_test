@@ -5,7 +5,7 @@
 #include "DgemmReference.h"
 #include <cblas.h> // For: cblas_dgemm
 
-void square_dgemm(int n, const double *A, const double *B, double *C) {
+void square_dgemm(const int n, const double *A, const double *B, double *C) {
     int M = n;
     int N = n;
     int K = n;

@@ -7,7 +7,7 @@
 /*
  * Based on example 9.12 from Agner Fog's VCL manual
  * */
-void square_dgemm(int n, const double *A, const double *B, double *C)
+void square_dgemm(const int n, const double *A, const double *B, double *C)
 {
     const int TWO_ACC_LIMIT = n - 1; //Stop accumulating with two accumulators early so not out of bounds
     const int cutN = n & (-VEC_SIZE); //Round down to multiple of 4
@@ -39,7 +39,7 @@ void square_dgemm(int n, const double *A, const double *B, double *C)
         }
 
     /* Use partial load/store on the rest of the matrix */
-    for(; i < n; i += VEC_SIZE)
+    if(i < n - 1)
         for (int j=0; j < n; j++)
         {
             Vec4d acc0(0.0);
