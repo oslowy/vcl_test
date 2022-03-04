@@ -4,6 +4,9 @@
 
 #include "DgemmVectorNonBlocked1AccJKI.h"
 
+/*
+ * Based on example 9.12 from Agner Fog's VCL manual
+ * */
 void square_dgemm(const int n, const double *A, const double *B, double *C)
 {
     const int cutN = n & (-VEC_SIZE); //Round down to multiple of 4
@@ -15,7 +18,7 @@ void square_dgemm(const int n, const double *A, const double *B, double *C)
             /* Pre-store vA[i][k] to avoid repeated memory access */
             double bkj = B[k+j*n];
 
-            /* Compute next partial sum of vC(i,j) */
+            /* Compute next partial sum of C(i,j) */
             int i;
             /* Use full load/store for the largest vector-multiple subset of the matrix */
             for(i = 0; i < cutN; i += VEC_SIZE)
@@ -25,8 +28,7 @@ void square_dgemm(const int n, const double *A, const double *B, double *C)
             /* Use partial load/store on the rest of the matrix */
             if(i < n)
                 (Vec4d().load_partial(remainder,C + i + j * n)
-                        + Vec4d().load_partial(remainder, A + i + k * n)
-                        * bkj)
+                        + Vec4d().load_partial(remainder, A + i + k * n) * bkj)
                     .store_partial(remainder, C + i + j * n);
         }
 }

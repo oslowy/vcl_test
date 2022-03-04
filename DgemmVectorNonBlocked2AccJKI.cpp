@@ -17,13 +17,13 @@ void square_dgemm(const int n, const double *A, const double *B, double *C)
     {
         /* Compute the partial sum for four accumulators */
         int k;
-        for (k = 0; k < TWO_ACC_LIMIT; k++)
+        for (k = 0; k < TWO_ACC_LIMIT; k += 2)
         {
             /* Pre-store elements of B to avoid repeated memory access */
             double bk0j = B[k + j * n];
             double bk1j = B[k + 1 + j * n];
 
-            /* Compute next partial sum of vC(i,j) */
+            /* Compute next partial sum of C(i,j) */
             int i;
             /* Use full load/store for the largest vector-multiple subset of the matrix */
             for(i = 0; i < cutN; i += VEC_SIZE)
@@ -44,7 +44,7 @@ void square_dgemm(const int n, const double *A, const double *B, double *C)
         {
             double bkj = B[k + j * n];
 
-            /* Compute next partial sum of vC(i,j) */
+            /* Compute next partial sum of C(i,j) */
             int i;
             /* Use full load/store for the largest vector-multiple subset of the matrix */
             for(i = 0; i < cutN; i += VEC_SIZE)
