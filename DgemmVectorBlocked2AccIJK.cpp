@@ -20,7 +20,7 @@ void do_block (const int n, const int M, const int N, const int K, const double*
         for (int j=0; j < N; j++)
         {
             /* Initialize the accumulators */
-            Vec4d acc0(0.0);
+            Vec4d acc0 = Vec4d().load(C + i + j * n);
             Vec4d acc1(0.0);
 
             /* Compute the partial sum for two accumulators*/
