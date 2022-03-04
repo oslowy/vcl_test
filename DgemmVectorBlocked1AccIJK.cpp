@@ -5,7 +5,7 @@
 #include "DgemmVectorBlocked1AccIJK.h"
 
 const char *dgemm_desc() {
-    return "Blocked Vectorized dgemm with i-j-k loop order within block";
+    return "Blocked Vectorized dgemm with 1 accumulator and i-j-k loop order within block";
 }
 
 void do_block (const int n, const int M, const int N, const int K, const double* A, const double* B, double* C)

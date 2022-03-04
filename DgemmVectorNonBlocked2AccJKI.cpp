@@ -59,7 +59,6 @@ void square_dgemm(const int n, const double *A, const double *B, double *C)
                         .store_partial(remainder, C + i + j * n);
         }
     }
-
 }
 
 const char *dgemm_desc() {
